@@ -15,7 +15,6 @@
 }
 
 *{box-sizing:border-box;font-family:'Poppins',sans-serif;}
-
 body{margin:0;background:var(--cinza);}
 
 /* HEADER */
@@ -67,7 +66,6 @@ h2,h3{color:var(--roxo);}
   transition:.3s;
 }
 .card:hover{transform:translateY(-6px);}
-
 .card img{
   width:100%;
   height:260px;
@@ -76,7 +74,6 @@ h2,h3{color:var(--roxo);}
 .card img.hover{display:none;}
 .card:hover img.main{display:none;}
 .card:hover img.hover{display:block;}
-
 .info{padding:15px;}
 .price{color:var(--laranja);font-weight:700;}
 
@@ -102,21 +99,36 @@ h2,h3{color:var(--roxo);}
   display:flex;
   gap:20px;
   flex-wrap:wrap;
-  position:relative;
 }
 
 .carousel{
+  position:relative;
   flex:1;
   min-width:250px;
 }
 
-.carousel img,
-.carousel video,
-.carousel iframe{
+.carousel img{
   width:100%;
   max-height:420px;
   object-fit:cover;
   border-radius:12px;
+}
+
+.close{
+  position:absolute;
+  top:15px;
+  right:15px;
+  font-size:28px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  padding:6px 12px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:101;
+  transition: background .2s;
+}
+.close:hover{
+  background: rgba(0,0,0,0.8);
 }
 
 .thumbs{
@@ -125,7 +137,7 @@ h2,h3{color:var(--roxo);}
   margin-top:10px;
   flex-wrap:wrap;
 }
-.thumbs img, .thumbs video{
+.thumbs img{
   width:60px;
   height:60px;
   object-fit:cover;
@@ -144,50 +156,34 @@ h2,h3{color:var(--roxo);}
   margin-top:15px;
 }
 
-/* CLOSE AO LADO DA IMAGEM */
-.close{
-  position:absolute;
-  top:10px;
-  left:calc(50% + 280px); /* ao lado do carrossel */
-  font-size:28px;
-  color:white;
-  cursor:pointer;
-  z-index:10;
+.details{
+  flex:1;
+  min-width:250px;
 }
 
-@media(max-width:1024px){
-  .close{left:auto; top:10px; right:15px;}
-}
-
+/* RESPONSIVO */
 @media(max-width:768px){
   .modal-content{flex-direction:column;}
   .card img{height:200px;}
-  .carousel img,
-  .carousel video,
-  .carousel iframe{max-height:300px;}
+  .carousel img{max-height:300px;}
 }
 @media(max-width:480px){
   .card img{height:180px;}
-  .carousel img,
-  .carousel video,
-  .carousel iframe{max-height:250px;}
+  .carousel img{max-height:250px;}
 }
 
 /* ===== MODO ESCURO ===== */
 body.dark{
   background:#0f0f0f;
 }
-
 body.dark header{
   background:linear-gradient(135deg,#2a043f,#12001d);
 }
-
 body.dark .card,
 body.dark .modal-content{
   background:#1a1a1a;
   color:#fff;
 }
-
 body.dark h1,
 body.dark h2,
 body.dark h3,
@@ -195,11 +191,9 @@ body.dark h4,
 body.dark p{
   color:#fff;
 }
-
 body.dark .price{
   color:#ff9f3f;
 }
-
 body.dark .dark-toggle{
   background:#fff;
   color:#000;
@@ -219,8 +213,8 @@ body.dark .dark-toggle{
 <section>
 <h2>🔥 Destaques</h2>
 <div class="grid">
-  <!-- PRODUTOS DE EXEMPLO -->
-  <div class="card" onclick="openModal('Vestido Feminino Elegante','Modelo moderno','R$ 59,90','#',['https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3','https://imgur.com/xH7ckxq.mp4'])">
+  <!-- PRODUTO 1 -->
+  <div class="card" onclick="openModal('Vestido Feminino Elegante','Modelo moderno, confortável e ideal para qualquer ocasião.','R$ 59,90','https://shopee.com.br/SEU-LINK',['https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3','https://images.unsplash.com/photo-1542060748-10c28b62716f','https://images.unsplash.com/photo-1541099649105-f69ad21f3246','https://images.unsplash.com/photo-1512436991641-6745cdb1723f'])">
     <img class="main" src="https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3">
     <img class="hover" src="https://images.unsplash.com/photo-1542060748-10c28b62716f">
     <div class="info">
@@ -228,14 +222,44 @@ body.dark .dark-toggle{
       <div class="price">R$ 59,90</div>
     </div>
   </div>
-  <!-- Adicione mais cards aqui e eles ficarão lado a lado -->
+
+  <!-- PRODUTO 2 -->
+  <div class="card" onclick="openModal('Blusa Casual Feminina','Blusa confortável, ideal para o dia a dia.','R$ 39,90','https://shopee.com.br/SEU-LINK',['https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3','https://images.unsplash.com/photo-1542060748-10c28b62716f'])">
+    <img class="main" src="https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3">
+    <img class="hover" src="https://images.unsplash.com/photo-1542060748-10c28b62716f">
+    <div class="info">
+      <h3>Blusa Casual Feminina</h3>
+      <div class="price">R$ 39,90</div>
+    </div>
+  </div>
+
+  <!-- PRODUTO 3 -->
+  <div class="card" onclick="openModal('Saia Midi Feminina','Saia estilosa e confortável para diversas ocasiões.','R$ 49,90','https://shopee.com.br/SEU-LINK',['https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3','https://images.unsplash.com/photo-1542060748-10c28b62716f'])">
+    <img class="main" src="https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3">
+    <img class="hover" src="https://images.unsplash.com/photo-1542060748-10c28b62716f">
+    <div class="info">
+      <h3>Saia Midi Feminina</h3>
+      <div class="price">R$ 49,90</div>
+    </div>
+  </div>
+
+  <!-- PRODUTO 4 -->
+  <div class="card" onclick="openModal('Vestido Longo Estampado','Vestido elegante e confortável para festas.','R$ 89,90','https://shopee.com.br/SEU-LINK',['https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3','https://images.unsplash.com/photo-1542060748-10c28b62716f'])">
+    <img class="main" src="https://images.unsplash.com/photo-1520974735194-9a7f05b0a1b3">
+    <img class="hover" src="https://images.unsplash.com/photo-1542060748-10c28b62716f">
+    <div class="info">
+      <h3>Vestido Longo Estampado</h3>
+      <div class="price">R$ 89,90</div>
+    </div>
+  </div>
 </div>
 </section>
 
 <section>
 <h3>🎒 Volta às Aulas 2026</h3>
 <div class="grid">
-  <div class="card" onclick="openModal('Kit Mochila Escolar Infantil','Kit com mochila','R$ 187,90','#',['https://imgur.com/MgShvCt.png','https://imgur.com/QKH1Eg0.png','https://sample-videos.com/video123/mp4/240/big_buck_bunny_240p.mp4'])">
+  <!-- PRODUTO 1 -->
+  <div class="card" onclick="openModal('Kit Mochila Escolar Infantil','Kit com mochila de rodinha, lancheira e estojo.','R$ 187,90','https://shopee.com.br/SEU-LINK',['https://imgur.com/yuGx5FY.png','https://imgur.com/dlPNZ4Z.png','https://imgur.com/yOPMjCY.png','https://imgur.com/rgWSz7F.png'])">
     <img class="main" src="https://imgur.com/MgShvCt.png">
     <img class="hover" src="https://imgur.com/QKH1Eg0.png">
     <div class="info">
@@ -243,14 +267,27 @@ body.dark .dark-toggle{
       <div class="price">R$ 187,90</div>
     </div>
   </div>
+
+  <!-- PRODUTO 2 -->
+  <div class="card" onclick="openModal('Estojo Escolar Colorido','Estojo divertido para lápis e canetas.','R$ 29,90','https://shopee.com.br/SEU-LINK',['https://imgur.com/yuGx5FY.png','https://imgur.com/xH7ckxq.mp4'])">
+    <img class="main" src="https://imgur.com/MgShvCt.png">
+    <img class="hover" src="https://imgur.com/QKH1Eg0.png">
+    <div class="info">
+      <h4>Estojo Escolar Colorido</h4>
+      <div class="price">R$ 29,90</div>
+    </div>
+  </div>
 </div>
 </section>
 
+<!-- MODAL -->
 <div class="modal" id="modal">
-<span class="close" onclick="closeModal()">×</span>
-
 <div class="modal-content">
-  <div class="carousel" id="carousel"></div>
+  <div class="carousel">
+    <span class="close" onclick="closeModal()">×</span>
+    <img id="mainImg">
+    <div class="thumbs" id="thumbs"></div>
+  </div>
 
   <div class="details">
     <h2 id="modalTitle"></h2>
@@ -264,30 +301,21 @@ body.dark .dark-toggle{
 <script>
 const darkToggle = document.getElementById("darkToggle");
 
-function openModal(title, desc, price, link, items){
+function openModal(title, desc, price, link, images){
   document.body.classList.add("modal-open");
+
   document.getElementById("modalTitle").innerText = title;
   document.getElementById("modalDesc").innerText = desc;
   document.getElementById("modalPrice").innerText = price;
   document.getElementById("modalLink").href = link;
 
-  const carousel = document.getElementById("carousel");
-  carousel.innerHTML = "";
+  document.getElementById("mainImg").src = images[0];
 
-  items.forEach(item => {
-    if(item.endsWith(".mp4")){ // vídeo
-      carousel.innerHTML += `<video src="${item}" controls></video>`;
-    } else if(item.includes("youtube.com") || item.includes("youtu.be")){ // YouTube
-      carousel.innerHTML += `<iframe src="${item}" frameborder="0" allowfullscreen></iframe>`;
-    } else { // imagem
-      carousel.innerHTML += `<img src="${item}">`;
-    }
+  const thumbs = document.getElementById("thumbs");
+  thumbs.innerHTML = "";
+  images.forEach(img=>{
+    thumbs.innerHTML += `<img src="${img}" onclick="document.getElementById('mainImg').src='${img}'">`;
   });
-
-  // mostra primeiro item
-  if(items[0].endsWith(".mp4")){
-    carousel.querySelector("video").play();
-  }
 
   document.getElementById("modal").style.display="flex";
 }
@@ -299,7 +327,11 @@ function closeModal(){
 
 function toggleDarkMode(){
   document.body.classList.toggle("dark");
-  darkToggle.innerText = document.body.classList.contains("dark") ? "🌙" : "☀️";
+  if(document.body.classList.contains("dark")){
+    darkToggle.innerText = "🌙"; // lua no escuro
+  } else {
+    darkToggle.innerText = "☀️"; // sol no claro
+  }
 }
 </script>
 
