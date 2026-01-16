@@ -15,17 +15,9 @@
 }
 
 *{box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{margin:0;background:var(--cinza);}
+body{margin:0;background:var(--cinza);transition:.3s;}
 
-/* HEADER */
-header{
-  background:linear-gradient(135deg,var(--roxo),#3c0a5e);
-  color:var(--branco);
-  padding:35px;
-  text-align:center;
-}
-
-/* BOTÃO MODO ESCURO */
+/* ===== DARK TOGGLE ===== */
 .dark-toggle{
   position:fixed;
   top:20px;
@@ -37,24 +29,89 @@ header{
   border-radius:50%;
   cursor:pointer;
   font-size:18px;
-  z-index:200;
+  z-index:300;
 }
 
-body.modal-open .dark-toggle{display:none;}
+/* ===== GLASS LANDING ===== */
+.landing{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#6a0dad,#2a043f);
+  padding:40px;
+}
+.glass{
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.15);
+  border-radius:24px;
+  padding:50px;
+  max-width:1100px;
+  width:100%;
+  display:flex;
+  gap:40px;
+  color:#fff;
+}
+.glass h1{font-size:3rem;}
+.glass p{font-size:1.2rem;margin:20px 0;}
+.glass a{
+  background:var(--laranja);
+  color:#fff;
+  padding:14px 32px;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:600;
+}
+.glass img{max-width:280px;width:100%;}
 
-section{padding:40px 4%;}
-h2,h3{color:var(--roxo);}
+/* ===== LAYOUT ===== */
+.layout{
+  display:grid;
+  grid-template-columns:260px 1fr;
+}
 
-/* GRID */
+/* ===== SIDEBAR ===== */
+.sidebar{
+  background:#fff;
+  padding:30px 20px;
+}
+.sidebar h3{margin-bottom:15px;}
+.sidebar button{
+  display:block;
+  width:100%;
+  background:none;
+  border:none;
+  text-align:left;
+  padding:10px;
+  cursor:pointer;
+  border-radius:8px;
+}
+.sidebar button:hover{background:#eee;}
+
+/* ===== SEARCH ===== */
+.search-box{
+  display:flex;
+  gap:10px;
+  margin-bottom:25px;
+}
+.search-box input{
+  flex:1;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #ccc;
+}
+
+/* ===== GRID ===== */
+section{padding:40px;}
 .grid{
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .card{
-  background:var(--branco);
+  background:#fff;
   border-radius:16px;
   overflow:hidden;
   cursor:pointer;
@@ -73,69 +130,7 @@ h2,h3{color:var(--roxo);}
 .info{padding:15px;}
 .price{color:var(--laranja);font-weight:700;}
 
-/* ===== LANDING PAGE ===== */
-.landing{
-  min-height:100vh;
-  background:linear-gradient(135deg,#6a0dad,#2a043f);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:40px 6%;
-  color:#fff;
-}
-.landing-content{
-  max-width:1200px;
-  display:flex;
-  align-items:center;
-  gap:60px;
-}
-.landing-text{
-  flex:1;
-  animation:fadeUp 1s ease;
-}
-.landing-text h1{
-  font-size:3rem;
-  margin-bottom:15px;
-}
-.landing-text p{
-  font-size:1.2rem;
-  margin-bottom:30px;
-}
-.landing-btn{
-  background:var(--laranja);
-  color:#fff;
-  padding:16px 36px;
-  border-radius:40px;
-  text-decoration:none;
-  font-weight:600;
-  display:inline-block;
-}
-.landing-btn:hover{transform:scale(1.05);}
-.landing-logo{
-  flex:1;
-  display:flex;
-  justify-content:center;
-}
-.landing-logo img{
-  max-width:320px;
-  width:100%;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(40px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-@media(max-width:900px){
-  .landing-content{flex-direction:column;text-align:center;}
-  .landing-text h1{font-size:2.4rem;}
-}
-@media(max-width:480px){
-  .landing-text h1{font-size:2rem;}
-  .landing-text p{font-size:1rem;}
-}
-
-/* MODAL */
+/* ===== MODAL ===== */
 .modal{
   position:fixed;
   inset:0;
@@ -143,40 +138,30 @@ h2,h3{color:var(--roxo);}
   display:none;
   justify-content:center;
   align-items:center;
-  z-index:99;
-  padding:15px;
+  z-index:999;
 }
-
 .modal-content{
-  background:var(--branco);
-  width:90%;
+  background:#fff;
   max-width:900px;
-  border-radius:20px;
+  width:90%;
   padding:25px;
+  border-radius:20px;
   display:flex;
   gap:20px;
   flex-wrap:wrap;
 }
-
-.carousel img{
-  width:100%;
-  max-height:420px;
-  object-fit:cover;
-  border-radius:12px;
-}
-
+.carousel img{width:100%;max-height:420px;object-fit:cover;}
 .close{
   position:absolute;
   top:15px;
   right:15px;
   font-size:28px;
-  background:rgba(0,0,0,.5);
+  background:#0008;
   color:#fff;
-  padding:6px 12px;
   border-radius:50%;
+  padding:6px 12px;
   cursor:pointer;
 }
-
 .thumbs img{
   width:60px;
   height:60px;
@@ -184,30 +169,52 @@ h2,h3{color:var(--roxo);}
   cursor:pointer;
   border-radius:8px;
 }
-
 .buy-btn{
   background:var(--laranja);
   color:#fff;
   padding:14px 26px;
   border-radius:30px;
   text-decoration:none;
-  font-weight:600;
-  margin-top:15px;
   display:inline-block;
+  margin-top:15px;
 }
 
+/* ===== RESPONSIVO ===== */
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{order:-1;}
+  .glass{flex-direction:column;text-align:center;}
+}
+
+/* ===== DARK MODE ===== */
 body.dark{
   background:#0f0f0f;
 }
-body.dark header{
-  background:linear-gradient(135deg,#2a043f,#12001d);
-}
+
+body.dark .sidebar,
 body.dark .card,
 body.dark .modal-content{
   background:#1a1a1a;
   color:#fff;
 }
-body.dark .price{color:#ff9f3f;}
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark p{
+  color:#fff;
+}
+
+body.dark .search-box input{
+  background:#111;
+  border:1px solid #333;
+  color:#fff;
+}
+
+body.dark .sidebar button:hover{
+  background:#222;
+}
+
 body.dark .dark-toggle{
   background:#fff;
   color:#000;
@@ -217,59 +224,57 @@ body.dark .dark-toggle{
 
 <body>
 
-<button class="dark-toggle" id="darkToggle" onclick="toggleDarkMode()">☀️</button>
+<button class="dark-toggle" id="darkBtn" onclick="toggleDarkMode()">☀️</button>
 
-<!-- LANDING PAGE -->
+<!-- LANDING -->
 <section class="landing">
-  <div class="landing-content">
-    <div class="landing-text">
+  <div class="glass">
+    <div>
       <h1>Achados & Bom Preço</h1>
-      <p>Os melhores achadinhos da Shopee para você economizar tempo e dinheiro 🛒</p>
-      <a href="#produtos" class="landing-btn">Ver Achados 🔥</a>
+      <p>Os melhores achadinhos da Shopee para você economizar tempo e dinheiro.</p>
+      <a href="#produtos">Ver Produtos 🔥</a>
     </div>
-    <div class="landing-logo">
-      <img src="SUA_LOGO_AQUI.png">
-    </div>
+    <img src="https://imgur.com/NBWUTbK.png">
   </div>
 </section>
 
-<header>
-  <h1>Achados & Bom Preço</h1>
-  <p>Achando e poupando seu tempo ao procurar produtos que você não sabe onde encontrar 🛒</p>
-</header>
+<div class="layout" id="produtos">
 
-<section id="produtos">
+<aside class="sidebar">
+  <h3>Categorias</h3>
+  <button onclick="filterCategory('all')">Todos</button>
+  <button onclick="filterCategory('volta-aulas')">Volta às Aulas</button>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar produto..." onkeyup="searchProduct()">
+  </div>
+</aside>
+
+<section>
 <h2>🎒 Volta às Aulas 2026</h2>
 <div class="grid">
- <!-- PRODUTO 1 -->
-  <div class="card" onclick="openModal('Kit Mochila Escolar Infantil','Kit com mochila de rodinha, lancheira e estojo. Garanta já para seu pequeno','R$ 187,90','https://s.shopee.com.br/20pCjDZFgA',\['https://imgur.com/yuGx5FY.png','https://imgur.com/dlPNZ4Z.png','https://imgur.com/yOPMjCY.png','https://imgur.com/rgWSz7F.png'])">
-    <img class="main" src="https://imgur.com/MgShvCt.png">
-    <img class="hover" src="https://imgur.com/QKH1Eg0.png">
-    <div class="info">
-      <h3>Kit Mochila Rodinha Infantil</h3>
-      <div class="price">R$ 187,90</div>
-    </div>
-  </div>
+<!-- Kit Mochila Rodinha infantil -->
+<div class="card" data-category="volta-aulas" data-name="kit mochila escolar infantil"
+onclick="openModal('Kit Mochila Escolar Infantil','Kit com mochila de rodinha, lancheira e estojo. Garanta já para seu pequeno','R$ 187,90','https://s.shopee.com.br/20pCjDZFgA',['https://imgur.com/yuGx5FY.png','https://imgur.com/dlPNZ4Z.png','https://imgur.com/yOPMjCY.png','https://imgur.com/rgWSz7F.png'])">
+<img class="main" src="https://imgur.com/MgShvCt.png">
+<img class="hover" src="https://imgur.com/QKH1Eg0.png">
+<div class="info"><h3>Kit Mochila Rodinha Infantil</h3><div class="price">R$ 187,90</div></div>
+</div>
+<!-- Mochila escolar feminina impermeavél -->
 
-<!-- PRODUTO 2 -->
-  <div class="card" onclick="openModal('Mochila escolar feminina/impermeável','É a mochila ideal para agregar praticidade no dia a dia corrido, em que é necessário levar todos os pertences de maior utilidade para as devidas tarefas.É destinado para uso na escola, faculdade, cursinho, trabalho, viagem. É fácil de carregar no ônibus, metrô ou trem.','R$ 85,00 - 98,00','https://s.shopee.com.br/9zrUZJBoW1',\['https://imgur.com/bwchsV7.png','https://imgur.com/RboRgch.png'])">
-    <img class="main" src="https://imgur.com/ptpjwhF.png">
-    <img class="hover" src="https://imgur.com/vFgtqsc.png">
-    <div class="info">
-      <h3>Mochila escolar feminina/impermeável</h3>
-      <div class="price">R$ 85,00 - 98,00</div>
-    </div>
-  </div>
+<div class="card" data-category="volta-aulas" data-name="mochila escolar feminina impermeável"
+onclick="openModal('Mochila escolar feminina/impermeável','É a mochila ideal para o dia a dia.','R$ 85,00 - 98,00','https://s.shopee.com.br/9zrUZJBoW1',['https://imgur.com/bwchsV7.png','https://imgur.com/RboRgch.png'])">
+<img class="main" src="https://imgur.com/ptpjwhF.png">
+<img class="hover" src="https://imgur.com/vFgtqsc.png">
+<div class="info"><h3>Mochila escolar feminina</h3><div class="price">R$ 85,00 - 98,00</div></div>
+</div>
+<!-- Estojo 72 pens -->
 
- <!-- estojo 72 pens -->
-  <div class="card" onclick="openModal('Estojo Escolar 72 Pens','Otimize sua rotina criativa com este estojo de alta capacidade. Com design portátil e elegante, oferece múltiplas divisórias com suportes elásticos para total organização e proteção dos seus materiais. Ideal para artistas que buscam praticidade e segurança no transporte.','R$ 39,99','https://s.shopee.com.br/5AmEWaoCvI',\['https://imgur.com/FwJZchf.png','https://imgur.com/Nm32Gvh.png','https://imgur.com/UTodNqx.png'])">
-    <img class="main" src="https://imgur.com/MH5XjUI.png">
-    <img class="hover" src="https://imgur.com/c5gM9Wr.png">
-    <div class="info">
-      <h3>Estojo 72 Pens Escolar</h3>
-      <div class="price">R$ 39,99</div>
-    </div>
-  </div>
+<div class="card" data-category="volta-aulas" data-name="Estojo Escolar 72 Pens"
+onclick="openModal('Estojo Escolar 72 Pens','Otimize sua rotina criativa com este estojo de alta capacidade. Com design portátil e elegante, oferece múltiplas divisórias com suportes elásticos para total organização e proteção dos seus materiais. Ideal para artistas que buscam praticidade e segurança no transporte.','R$ 39,99','https://s.shopee.com.br/5AmEWaoCvI',['https://imgur.com/FwJZchf.png','https://imgur.com/Nm32Gvh.png','https://imgur.com/UTodNqx.png'])">
+<img class="main" src="https://imgur.com/MH5XjUI.png">
+<img class="hover" src="https://imgur.com/c5gM9Wr.png">
+<div class="info"><h3>Estojo 72 Pens Escolar</h3><div class="price">R$ 39,99</div></div>
 </div>
 </section>
 
@@ -292,30 +297,38 @@ body.dark .dark-toggle{
 </div>
 
 <script>
-const darkToggle=document.getElementById("darkToggle");
+function openModal(title, desc, price, link, images){
+  const modal = document.getElementById('modal');
+  modal.style.display = 'flex';
 
-function openModal(title,desc,price,link,images){
-  document.getElementById("modalTitle").innerText=title;
-  document.getElementById("modalDesc").innerText=desc;
-  document.getElementById("modalPrice").innerText=price;
-  document.getElementById("modalLink").href=link;
-  document.getElementById("mainImg").src=images[0];
-  const thumbs=document.getElementById("thumbs");
-  thumbs.innerHTML="";
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalDesc').innerText = desc;
+  document.getElementById('modalPrice').innerText = price;
+  document.getElementById('modalLink').href = link;
+
+  const mainImg = document.getElementById('mainImg');
+  const thumbs = document.getElementById('thumbs');
+
+  mainImg.src = images[0];
+  thumbs.innerHTML = '';
+
   images.forEach(img=>{
-    thumbs.innerHTML+=`<img src="${img}" onclick="document.getElementById('mainImg').src='${img}'">`;
+    const t = document.createElement('img');
+    t.src = img;
+    t.onclick = ()=> mainImg.src = img;
+    thumbs.appendChild(t);
   });
-  document.getElementById("modal").style.display="flex";
 }
 
 function closeModal(){
-  document.getElementById("modal").style.display="none";
+  document.getElementById('modal').style.display = 'none';
 }
 
-function toggleDarkMode(){
-  document.body.classList.toggle("dark");
-  darkToggle.innerText=document.body.classList.contains("dark")?"🌙":"☀️";
-}
+document.getElementById('modal').addEventListener('click', e=>{
+  if(e.target.id === 'modal'){
+    closeModal();
+  }
+});
 </script>
 
 </body>
