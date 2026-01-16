@@ -228,7 +228,7 @@ body.dark .dark-toggle{
       <a href="#produtos" class="landing-btn">Ver Achados 🔥</a>
     </div>
     <div class="landing-logo">
-      <img src="https://imgur.com/NBWUTbK.png">
+      <img src="SUA_LOGO_AQUI.png">
     </div>
   </div>
 </section>
@@ -240,12 +240,56 @@ body.dark .dark-toggle{
 
 <section id="produtos">
 <h2>🎒 Volta às Aulas 2026</h2>
-
-<!-- ⚠️ PRODUTOS NÃO FORAM ALTERADOS -->
 <div class="grid">
-  <!-- seus cards continuam exatamente iguais -->
+ <!-- PRODUTO 1 -->
+  <div class="card" onclick="openModal('Kit Mochila Escolar Infantil','Kit com mochila de rodinha, lancheira e estojo. Garanta já para seu pequeno','R$ 187,90','https://s.shopee.com.br/20pCjDZFgA',\['https://imgur.com/yuGx5FY.png','https://imgur.com/dlPNZ4Z.png','https://imgur.com/yOPMjCY.png','https://imgur.com/rgWSz7F.png'])">
+    <img class="main" src="https://imgur.com/MgShvCt.png">
+    <img class="hover" src="https://imgur.com/QKH1Eg0.png">
+    <div class="info">
+      <h3>Kit Mochila Rodinha Infantil</h3>
+      <div class="price">R$ 187,90</div>
+    </div>
+  </div>
+
+<!-- PRODUTO 2 -->
+  <div class="card" onclick="openModal('Mochila escolar feminina/impermeável','É a mochila ideal para agregar praticidade no dia a dia corrido, em que é necessário levar todos os pertences de maior utilidade para as devidas tarefas.É destinado para uso na escola, faculdade, cursinho, trabalho, viagem. É fácil de carregar no ônibus, metrô ou trem.','R$ 85,00 - 98,00','https://s.shopee.com.br/9zrUZJBoW1',\['https://imgur.com/bwchsV7.png','https://imgur.com/RboRgch.png'])">
+    <img class="main" src="https://imgur.com/ptpjwhF.png">
+    <img class="hover" src="https://imgur.com/vFgtqsc.png">
+    <div class="info">
+      <h3>Mochila escolar feminina/impermeável</h3>
+      <div class="price">R$ 85,00 - 98,00</div>
+    </div>
+  </div>
+
+ <!-- estojo 72 pens -->
+  <div class="card" onclick="openModal('Estojo Escolar 72 Pens','Otimize sua rotina criativa com este estojo de alta capacidade. Com design portátil e elegante, oferece múltiplas divisórias com suportes elásticos para total organização e proteção dos seus materiais. Ideal para artistas que buscam praticidade e segurança no transporte.','R$ 39,99','https://s.shopee.com.br/5AmEWaoCvI',\['https://imgur.com/FwJZchf.png','https://imgur.com/Nm32Gvh.png','https://imgur.com/UTodNqx.png'])">
+    <img class="main" src="https://imgur.com/MH5XjUI.png">
+    <img class="hover" src="https://imgur.com/c5gM9Wr.png">
+    <div class="info">
+      <h3>Estojo 72 Pens Escolar</h3>
+      <div class="price">R$ 39,99</div>
+    </div>
+  </div>
 </div>
 </section>
+
+<!-- MODAL end -->
+<div class="modal" id="modal">
+<div class="modal-content">
+  <div class="carousel">
+    <span class="close" onclick="closeModal()">×</span>
+    <img id="mainImg">
+    <div class="thumbs" id="thumbs"></div>
+  </div>
+
+  <div class="details">
+    <h2 id="modalTitle"></h2>
+    <p id="modalDesc"></p>
+    <div class="price" id="modalPrice"></div>
+    <a class="buy-btn" id="modalLink" target="\_blank">Comprar na Shopee 🧡</a>
+  </div>
+</div>
+</div>
 
 <script>
 const darkToggle=document.getElementById("darkToggle");
