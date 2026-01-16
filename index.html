@@ -314,6 +314,28 @@ body.dark .dark-toggle{
 .card:hover img{
   transform:scale(1.05);
 }
+/* ===== ANIMAÇÃO FLUTUANTE (LANDING PAGE) ===== */
+@keyframes float{
+  0%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-12px);
+  }
+  100%{
+    transform:translateY(0);
+  }
+}
+
+/* vidro (container principal) */
+.landing .glass{
+  animation:float 6s ease-in-out infinite;
+}
+
+/* imagem flutuando um pouco diferente */
+.landing img{
+  animation:float 4s ease-in-out infinite;
+}
 </style>
 </head>
 
