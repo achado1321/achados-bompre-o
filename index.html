@@ -226,38 +226,63 @@ section{padding:40px;}
   .glass{flex-direction:column;text-align:center;}
 }
 
-/* ===== DARK MODE ===== */
+/* ===== DARK MODE (ROXO ESCURO MELHOR CONTRASTE) ===== */
 body.dark{
-  background:#0f0f0f;
+  background:#0b0614; /* fundo principal */
 }
 
-body.dark .sidebar,
-body.dark .card,
+body.dark .sidebar{
+  background:#140a24; /* fundo da sidebar */
+  color:#e6d9ff;
+}
+
+body.dark .card{
+  background:#1a0f2e;
+  color:#ffffff;
+}
+
 body.dark .modal-content{
-  background:#1a1a1a;
-  color:#fff;
+  background:#1a0f2e;
+  color:#ffffff;
 }
 
+/* Títulos */
 body.dark h1,
 body.dark h2,
-body.dark h3,
-body.dark p{
-  color:#fff;
+body.dark h3{
+  color:#e9ddff;
 }
 
+/* Texto comum */
+body.dark p{
+  color:#d2c1ff;
+}
+
+/* Busca */
 body.dark .search-box input{
-  background:#111;
-  border:1px solid #333;
-  color:#fff;
+  background:#0f0820;
+  border:1px solid #3b1a6d;
+  color:#ffffff;
+}
+
+/* Categorias */
+body.dark .sidebar h3{
+  color:#caa8ff;
+}
+
+body.dark .sidebar button{
+  color:#b58cff;
 }
 
 body.dark .sidebar button:hover{
-  background:#222;
+  background:#2a1450;
+  color:#ffffff;
 }
 
+/* Botão dark */
 body.dark .dark-toggle{
-  background:#fff;
-  color:#000;
+  background:#ffffff;
+  color:#3a135f;
 }
 </style>
 </head>
