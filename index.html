@@ -366,6 +366,16 @@ body.dark .dark-toggle{
   opacity:1;
   transition:opacity .25s ease;
 }
+/* ===== Thumbnail ativa MODAL ===== */
+.thumbs img.active{
+  border:2px solid #6a0dad;
+  opacity:1;
+  transform:scale(1.05);
+}
+
+.thumbs img{
+  transition:.3s;
+}
 </style>
 </head>
 
@@ -518,27 +528,31 @@ function openModal(title, desc, price, link, images){
   images.forEach((img, index)=>{
     const t = document.createElement('img');
     t.src = img;
+
+    if(index === 0) t.classList.add('active');
+
     t.onclick = ()=>{
       currentIndex = index;
       changeImageWithFade(img);
+      updateActiveThumb();
     };
+
     thumbs.appendChild(t);
   });
 
   modal.style.display = 'flex';
   enableSwipe();
 }
-
 function nextImage(){
   currentIndex = (currentIndex + 1) % currentImages.length;
   changeImageWithFade(currentImages[currentIndex]);
+  updateActiveThumb();
 }
-
 function prevImage(){
   currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
   changeImageWithFade(currentImages[currentIndex]);
+  updateActiveThumb();
 }
-
 function closeModal(){
   document.getElementById('modal').style.display = 'none';
 }
@@ -580,6 +594,23 @@ function changeImageWithFade(src){
     img.src = src;
     img.style.opacity = 1;
   }, 150);
+}
+/* ===== FECHAR MODAL AO CLICAR FORA ===== */
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === this){
+    closeModal();
+  }
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    closeModal();
+  }
+});
+/* 👉 Thumnail Ativa modal */
+function updateActiveThumb(){
+  document.querySelectorAll('.thumbs img').forEach((thumb, i)=>{
+    thumb.classList.toggle('active', i === currentIndex);
+  });
 }
 </script>
 
