@@ -336,6 +336,36 @@ body.dark .dark-toggle{
 .landing img{
   animation:float 4s ease-in-out infinite;
 }
+/* ===== SETAS DO MODAL ===== */
+.arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:38px;
+  background:rgba(0,0,0,.55);
+  color:#fff;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  user-select:none;
+  z-index:10;
+}
+
+.arrow.left{ left:10px; }
+.arrow.right{ right:10px; }
+
+.arrow:hover{
+  background:rgba(0,0,0,.8);
+}
+/* ===== ANIMAÇÃO SUAVE NA TROCA DE IMAGEM DO MODAL ===== */
+#mainImg{
+  opacity:1;
+  transition:opacity .25s ease;
+}
 </style>
 </head>
 
@@ -417,6 +447,8 @@ onclick="openModal('Caderno Universitário Stranger Things Tilibra 1, 10 Matéri
 <div class="modal-content">
   <div class="carousel">
     <span class="close" onclick="closeModal()">×</span>
+<span class="arrow left" onclick="prevImage()">‹</span>
+  <span class="arrow right" onclick="nextImage()">›</span>
     <img id="mainImg">
     <div class="thumbs" id="thumbs"></div>
   </div>
@@ -461,12 +493,18 @@ function toggleDarkMode(){
   document.getElementById('darkBtn').innerText =
     document.body.classList.contains('dark') ? '🌙' : '☀️';
 }
+/* ===== MODAL FUNCTIONS ===== */
 
-/* ===== MODAL FUNCTIONS (ESTAVA FALTANDO) ===== */
+let currentImages = [];
+let currentIndex = 0;
+let startX = 0;
+let isSwiping = false;
 
 function openModal(title, desc, price, link, images){
+  currentImages = images;
+  currentIndex = 0;
+
   const modal = document.getElementById('modal');
-  const mainImg = document.getElementById('mainImg');
   const thumbs = document.getElementById('thumbs');
 
   document.getElementById('modalTitle').innerText = title;
@@ -474,21 +512,74 @@ function openModal(title, desc, price, link, images){
   document.getElementById('modalPrice').innerText = price;
   document.getElementById('modalLink').href = link;
 
-  mainImg.src = images[0];
+  changeImageWithFade(images[0]);
   thumbs.innerHTML = '';
 
-  images.forEach(img=>{
+  images.forEach((img, index)=>{
     const t = document.createElement('img');
     t.src = img;
-    t.onclick = ()=> mainImg.src = img;
+    t.onclick = ()=>{
+      currentIndex = index;
+      changeImageWithFade(img);
+    };
     thumbs.appendChild(t);
   });
 
   modal.style.display = 'flex';
+  enableSwipe();
+}
+
+function nextImage(){
+  currentIndex = (currentIndex + 1) % currentImages.length;
+  changeImageWithFade(currentImages[currentIndex]);
+}
+
+function prevImage(){
+  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+  changeImageWithFade(currentImages[currentIndex]);
 }
 
 function closeModal(){
   document.getElementById('modal').style.display = 'none';
+}
+
+/* ===== SWIPE MOBILE ===== */
+function enableSwipe(){
+  const mainImg = document.getElementById('mainImg');
+  if(!mainImg) return;
+
+  mainImg.ontouchstart = (e)=>{
+    startX = e.touches[0].clientX;
+    isSwiping = true;
+  };
+
+  mainImg.ontouchend = (e)=>{
+    if(!isSwiping) return;
+
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if(diff > 50){
+      nextImage();
+    }else if(diff < -50){
+      prevImage();
+    }
+
+    isSwiping = false;
+  };
+}
+
+/* ===== FADE EFFECT ===== */
+function changeImageWithFade(src){
+  const img = document.getElementById('mainImg');
+  if(!img) return;
+
+  img.style.opacity = 0;
+
+  setTimeout(()=>{
+    img.src = src;
+    img.style.opacity = 1;
+  }, 150);
 }
 </script>
 
