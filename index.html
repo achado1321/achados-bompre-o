@@ -481,29 +481,88 @@ body.dark .dark-toggle{
   margin-right:8px;
 }
 #noResults{
-  display:none;
-  text-align:center;
-  margin:40px auto;
-  padding:20px;
-  max-width:420px;
-  font-size:1.1rem;
-  line-height:1.6;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  display:none;          /* começa invisível */
+  text-align:center;     /* centraliza o texto horizontalmente */
+  margin:20px auto;      /* centraliza dentro da tela */
+  font-size:1.1rem;      /* tamanho legível */
+  line-height:1.5;       /* espaçamento confortável */
+  color:#000;            /* texto padrão */
 }
 
 /* Dark mode */
 body.dark #noResults{
-  background:#1a1a1a;
-  color:#fff;
+  color:#fff;            /* texto visível no dark mode */
 }
 
-/* Mobile */
+/* MOBILE */
 @media (max-width: 768px){
   #noResults{
-    width:90%;
+    font-size:1rem;      /* ajusta tamanho no celular */
+  }
+}
+/* ================= SIDEBAR ================= */
+
+/* Desktop: sidebar visível */
+.sidebar{
+  display:block;
+}
+
+/* Botão categorias escondido no desktop */
+.mobile-filter-btn{
+  display:none;
+}
+
+/* ================= MOBILE / TABLET ================= */
+@media (max-width: 1024px){
+  
+  /* Mostrar botão de categorias */
+  .mobile-filter-btn{
+    display:block;
+    width:100%;
+    padding:12px;
     font-size:1rem;
+    background:#6b3fc9;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    margin:15px 0;
+    cursor:pointer;
+  }
+
+  /* Sidebar escondida por padrão */
+  .sidebar{
+    display:none;
+    margin-bottom:20px;
+  }
+
+  /* Sidebar ativa ao clicar no botão */
+  .sidebar.active{
+    display:block;
+  }
+
+  /* Layout de produtos ocupa toda largura */
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  /* Grid de produtos responsiva */
+  .grid{
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:15px;
+  }
+
+  /* Aviso noResults */
+  #noResults{
+    font-size:1rem;
+    text-align:center;
+    margin:20px auto;
+  }
+}
+
+/* Mobile ainda menor */
+@media (max-width: 768px){
+  #noResults{
+    font-size:.95rem;
   }
 }
 </style>
