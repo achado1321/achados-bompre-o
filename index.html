@@ -1,3 +1,5 @@
+sitee
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,9 +15,7 @@
 <meta name="robots" content="index, follow">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
- <!-- Ícone da aba do navegador -->
-  <link rel="icon" href="favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="favicon.png">
+
 <style>
 :root{
   --roxo:#6a0dad;
@@ -654,6 +654,16 @@ onclick="openModal('Fatiador Profissional Multifuncional De Aço Inoxidável','T
 <div class="info"><h3>Fatiador Profissional Multifuncional De Aço Inoxidável</h3><div class="price">R$ 44,99</div></div>
 </div>
 
+<!-- Torneira inox -->
+
+<div class="card" data-category="cozinha" data-name="Torneira com chuveiro com rotação de 360°"
+onclick="openModal('Torneira com chuveiro com rotação de 360°','Transforme sua pia em uma estação completa: jato de água potente, movimentação 360° para alcançar todos os cantos e instalação prática. Ideal para lavar louças, encher panelas grandes e facilitar o dia a dia com mais agilidade e eficiência. Durável, elegante e indispensável para qualquer cozinha moderna!','R$22,90 - R$28,90
+','https://s.shopee.com.br/14Ek1yaJC',['https://imgur.com/ivyGFn3.png','https://imgur.com/xEHSlOq.png','https://imgur.com/Q9T9MKo.png'])">
+<img class="main" src="https://imgur.com/7fs6EBb.png">
+<img class="hover" src="https://imgur.com/b7kDNj2.png">
+<div class="info"><h3>Torneira com chuveiro com rotação de 360°</h3><div class="price">R$ R$22,90 - R$28,90</div></div>
+</div>
+
 <!-- AVISO GLOBAL (vale para todas categorias e buscas) -->
 <p id="noResults">
   😞 Desculpe, não temos esses achados agora.<br>
@@ -684,32 +694,25 @@ onclick="openModal('Fatiador Profissional Multifuncional De Aço Inoxidável','T
 <script>
 function filterCategory(cat){
   const title = document.getElementById('categoryTitle');
-  const cards = document.querySelectorAll('.card');
-
-  cards.forEach(c=>{
-    c.style.display =
-      (cat === 'all' || c.dataset.category === cat) ? 'block' : 'none';
-  });
 
   if(cat === 'all'){
-    title.innerText = '🔥 Achados em Destaque';
-    defaultTitle = title.innerText;
-
-  } else if(cat === 'volta-aulas'){
-    title.innerText = '🎒 Volta às Aulas';
-    defaultTitle = title.innerText;
-
-  } else if(cat === 'cozinha'){
-    title.innerText = '🥘 Cozinha';
-    defaultTitle = title.innerText;
+    title.innerText = '🔥 Todos os Produtos';
   }
+  if(cat === 'volta-aulas'){
+    title.innerText = '🎒 Volta às Aulas 2026';
+  }
+  if(cat === 'cozinha'){
+    title.innerText = '🍳 Cozinha';
+  }
+
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.display = (cat === 'all' || c.dataset.category === cat) ? 'block' : 'none';
+  });
 }
 function searchProduct(){
   const v = document.getElementById('searchInput').value.toLowerCase();
   const cards = document.querySelectorAll('.card');
   const noResults = document.getElementById('noResults');
-  const title = document.getElementById('categoryTitle');
-
   let found = false;
 
   cards.forEach(c=>{
@@ -720,12 +723,6 @@ function searchProduct(){
       c.style.display = 'none';
     }
   });
-
-  if(v.length > 0){
-    title.innerText = '🔍 Resultados da busca';
-  } else {
-    title.innerText = defaultTitle;
-  }
 
   noResults.style.display = found ? 'none' : 'block';
 }
@@ -848,16 +845,6 @@ function toggleCategories(){
   const sidebar = document.querySelector('.sidebar');
   sidebar.classList.toggle('active');
 }
-
-let defaultTitle = '';
-
-document.addEventListener('DOMContentLoaded', () => {
-  const titleEl = document.getElementById('categoryTitle');
-  if(titleEl){
-    defaultTitle = titleEl.innerText;
-  }
-});
-
 
 </script>
 
