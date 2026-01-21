@@ -1332,8 +1332,8 @@ onclick="openModal('Escova de Limpeza Multifuncional Elétrica 5 em1 Ferramenta 
  data-category="moda"
  data-subcategory="masculino"
  data-store="shein"
- data-name="PAVTROS Moletom com Capuz Bordado 3D "LOVE" com Teia de Aranha e Coração"
- data-desc="Design marcante com bordado 3D “LOVE”, detalhes de teia de aranha e coração que trazem atitude ao visual. Confortável e moderno, perfeito para compor outfits streetwear. Estilo, personalidade e conforto em uma só peça! 🕷️❤️"
+ data-name="PAVTROS Moletom com Capuz Bordado 3D LOVE com Teia de Aranha e Coração"
+ data-desc="Design marcante com bordado 3D LOVE, detalhes de teia de aranha e coração que trazem atitude ao visual. Confortável e moderno, perfeito para compor outfits streetwear. Estilo, personalidade e conforto em uma só peça! 🕷️❤️"
  data-price="R$203,95"
  data-link="https://onelink.shein.com/27/5dz6imvb404k"
  data-images='[
@@ -1349,7 +1349,7 @@ onclick="openModal('Escova de Limpeza Multifuncional Elétrica 5 em1 Ferramenta 
 
   <!-- INFO DO PRODUTO -->
   <div class="info">
-    <h3>PAVTROS Moletom com Capuz Bordado 3D "LOVE" com Teia de Aranha e Coração</h3>
+    <h3>PAVTROS Moletom com Capuz Bordado 3D LOVE com Teia de Aranha e Coração</h3>
     <div class="price">R$203,95</div></div>
 </div>
 
@@ -1632,16 +1632,24 @@ function toggleSubcats(cat){
   });
 }
 document.querySelectorAll('.card').forEach(card => {
+
+  // ⛔ se já tem onclick antigo, não interfere
+  if (card.hasAttribute('onclick')) return;
+
   card.addEventListener('click', () => {
+
+    const images = card.dataset.images
+      ? JSON.parse(card.dataset.images)
+      : [card.querySelector('img.main')?.src];
 
     const store = card.dataset.store || 'shopee';
 
     openModal(
-      card.dataset.name,
-      card.dataset.desc,
-      card.dataset.price,
-      card.dataset.link,
-      JSON.parse(card.dataset.images),
+      card.dataset.name || '',
+      card.dataset.desc || '',
+      card.dataset.price || '',
+      card.dataset.link || '#',
+      images,              // ✅ USA A VARIÁVEL
       store
     );
   });
