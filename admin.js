@@ -48,24 +48,44 @@ auth.onAuthStateChanged(user => {
 // ➕ ADICIONAR PRODUTO
 window.addProduct = function () {
   const name = document.getElementById("name").value.trim();
+  const desc = document.getElementById("desc").value.trim();
   const price = document.getElementById("price").value.trim();
+  const store = document.getElementById("store").value;
+  const category = document.getElementById("category").value.trim();
+  const subcategory = document.getElementById("subcategory").value.trim();
+  const mainImg = document.getElementById("mainImg").value.trim();
+  const hoverImg = document.getElementById("hoverImg").value.trim();
+  const modalImgsRaw = document.getElementById("modalImgs").value.trim();
   const link = document.getElementById("link").value.trim();
 
-  if (!name || !price || !link) {
-    alert("Preencha todos os campos");
+  if (!name || !price || !link || !mainImg) {
+    alert("Preencha os campos obrigatórios");
     return;
   }
 
+  const modalImages = modalImgsRaw
+    ? modalImgsRaw.split("\n").map(i => i.trim()).filter(Boolean)
+    : [];
+
   produtosRef.add({
     name,
+    desc,
     price,
+    store,
+    category,
+    subcategory,
+    images: {
+      main: mainImg,
+      hover: hoverImg,
+      modal: modalImages
+    },
     link,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
 
-  document.getElementById("name").value = "";
-  document.getElementById("price").value = "";
-  document.getElementById("link").value = "";
+  // limpa formulário
+  document.querySelectorAll("#adminArea input, #adminArea textarea")
+    .forEach(el => el.value = "");
 };
 
 // 📋 LISTAR PRODUTOS
