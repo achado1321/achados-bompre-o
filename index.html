@@ -591,34 +591,34 @@ body.dark #noResults{
   }
 }
 
-  /* ===== FIX RESPONSIVO PARA PRODUTOS DO ADMIN ===== */
+ /* ===== GRID RESPONSIVO DEFINITIVO ===== */
 
-/* MOBILE / TABLET */
-@media (max-width: 768px){
-
-  .card{
-    transform:none !important;
-  }
-
-  /* evita trocar imagem no toque */
-  .card img.hover{
-    display:none !important;
-  }
-
-  .card img.main{
-    display:block !important;
+/* MOBILE (celular) */
+@media (max-width: 600px){
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr); /* 👈 2 por linha */
+    gap:14px;
   }
 
   .card img{
     height:180px;
-    object-fit:cover;
   }
 }
 
 /* TABLET */
-@media (max-width: 1024px){
+@media (min-width: 601px) and (max-width: 1024px){
   .grid{
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    display:grid;
+    grid-template-columns: repeat(3, 1fr); /* 👈 3 por linha */
+    gap:18px;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1025px){
+  .grid{
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }
 </style>
