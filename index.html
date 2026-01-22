@@ -20,106 +20,65 @@
 :root{
   --roxo:#6a0dad;
   --laranja:#ff7a00;
-  --branco:#fff;
   --cinza:#f4f4f4;
 }
 
-*{box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{margin:0;background:var(--cinza);transition:.3s;}
-
-/* ===== DARK TOGGLE ===== */
-.dark-toggle{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:#111;
-  color:#fff;
-  border:none;
-  padding:10px 14px;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:18px;
-  z-index:300;
+/* RESET */
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
 }
 
-/* ===== GLASS LANDING ===== */
-.landing{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#6a0dad,#2a043f);
-  padding:40px;
+body{
+  margin:0;
+  background:var(--cinza);
+  transition:.3s;
 }
-.glass{
-  backdrop-filter:blur(15px);
-  background:rgba(255,255,255,0.15);
-  border-radius:24px;
-  padding:50px;
-  max-width:1100px;
-  width:100%;
-  display:flex;
-  gap:40px;
-  color:#fff;
-}
-.glass h1{font-size:3rem;}
-.glass p{font-size:1.2rem;margin:20px 0;}
-.glass a{
-  background:var(--laranja);
-  color:#fff;
-  padding:14px 32px;
-  border-radius:40px;
-  text-decoration:none;
-  font-weight:600;
-}
-.glass img{max-width:280px;width:100%;}
 
-/* ===== LAYOUT ===== */
+/* ================= LAYOUT ================= */
+
 .layout{
   display:grid;
   grid-template-columns:260px 1fr;
 }
 
-/* ===== SIDEBAR ===== */
+section{
+  padding:40px;
+}
+
+/* ================= SIDEBAR ================= */
+
 .sidebar{
   background:#fff;
   padding:30px 20px;
 }
-.sidebar h3{margin-bottom:15px;}
+
 .sidebar button{
-  display:block;
   width:100%;
   background:none;
   border:none;
-  text-align:left;
   padding:10px;
+  text-align:left;
   cursor:pointer;
   border-radius:8px;
 }
-.sidebar button:hover{background:#eee;}
 
-/* ===== SEARCH ===== */
-.search-box{
-  display:flex;
-  gap:10px;
-  margin-bottom:25px;
-}
-.search-box input{
-  flex:1;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #ccc;
+.sidebar button:hover{
+  background:#eee;
 }
 
-/* ===== GRID ===== */
-section{padding:40px;}
-.grid{
+/* ================= GRID (PRODUTOS ANTIGOS + ADMIN) ================= */
+
+.grid,
+#productGrid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
+  width:100%;
 }
 
-/* ===== CARD ===== */
+/* ================= CARD ================= */
+
 .card{
   background:#fff;
   border-radius:16px;
@@ -128,494 +87,103 @@ section{padding:40px;}
   box-shadow:0 10px 25px rgba(0,0,0,.1);
   transition:.3s;
 }
-.card{
-  transition:transform .3s ease, box-shadow .3s ease;
-}
 
 .card:hover{
-  transform:translateY(-10px) scale(1.02);
-  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  transform:translateY(-8px);
 }
+
 .card img{
   width:100%;
   height:260px;
   object-fit:cover;
 }
-.card img.hover{display:none;}
-.card:hover img.main{display:none;}
-.card:hover img.hover{display:block;}
-.info{padding:15px;}
-.price{color:var(--laranja);font-weight:700;}
 
-/* ===== MODAL ===== */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
+.card img.hover{
   display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
 }
 
-.modal-content{
-  background:#fff;
-  max-width:800px;
-  width:95%;
-  max-height:90vh;          /* 👈 limite de altura */
-  overflow-y:auto;          /* 👈 scroll interno */
-  padding:20px;
-  border-radius:20px;
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  position:relative;
+.card:hover img.main{
+  display:none;
 }
 
-.carousel{
-  width:100%;
-  position:relative;
+.card:hover img.hover{
+  display:block;
 }
 
-.carousel img{
-  width:100%;
-  height:auto;           /* respeita proporção */
-  max-height:70vh;       /* limite baseado na tela */
-  object-fit:contain;    /* não corta a imagem */
-  border-radius:16px;
+.info{
+  padding:15px;
 }
 
-/* BOTÃO FECHAR EM CIMA DA IMAGEM */
-.close{
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:26px;
-  background:rgba(0,0,0,.6);
-  color:#fff;
-  border-radius:50%;
-  width:40px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  z-index:10;
+.price{
+  color:var(--laranja);
+  font-weight:700;
 }
 
-.thumbs{
-  display:flex;
-  gap:10px;
-  margin-top:10px;
-  flex-wrap:wrap;
+/* ================= NO RESULTS ================= */
+
+#noResults{
+  display:none;
+  text-align:center;
+  margin:40px auto;
+  max-width:480px;
+  font-size:1.1rem;
+  line-height:1.6;
 }
 
-.thumbs img{
-  width:60px;
-  height:60px;
-  object-fit:cover;
-  cursor:pointer;
-  border-radius:8px;
-  opacity:.7;
-}
+/* ================= DARK MODE ================= */
 
-.thumbs img:hover{
-  opacity:1;
-}
-
-.details{
-  width:100%;
-}
-
-.buy-btn{
-  background:var(--laranja);
-  color:#fff;
-  padding:14px 26px;
-  border-radius:30px;
-  text-decoration:none;
-  display:inline-block;
-  margin-top:15px;
-}
-
-/* ===== RESPONSIVO ===== */
-@media(max-width:900px){
-  .layout{grid-template-columns:1fr;}
-  .sidebar{order:-1;}
-  .glass{flex-direction:column;text-align:center;}
-}
-
-/* ===== DARK MODE (ROXO ESCURO MELHOR CONTRASTE) ===== */
 body.dark{
-  background:#0b0614; /* fundo principal */
+  background:#0b0614;
 }
 
 body.dark .sidebar{
-  background:#140a24; /* fundo da sidebar */
+  background:#140a24;
   color:#e6d9ff;
 }
 
 body.dark .card{
   background:#1a0f2e;
-  color:#ffffff;
-}
-
-body.dark .modal-content{
-  background:#1a0f2e;
-  color:#ffffff;
-}
-
-/* Títulos */
-body.dark h1,
-body.dark h2,
-body.dark h3{
-  color:#e9ddff;
-}
-
-/* Texto comum */
-body.dark p{
-  color:#d2c1ff;
-}
-
-/* Busca */
-body.dark .search-box input{
-  background:#0f0820;
-  border:1px solid #3b1a6d;
-  color:#ffffff;
-}
-
-/* Categorias */
-body.dark .sidebar h3{
-  color:#caa8ff;
-}
-
-body.dark .sidebar button{
-  color:#b58cff;
-}
-
-body.dark .sidebar button:hover{
-  background:#2a1450;
-  color:#ffffff;
-}
-
-/* Botão dark */
-body.dark .dark-toggle{
-  background:#ffffff;
-  color:#3a135f;
-}
-
-@keyframes cardFadeUp{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-.card{
-  animation:cardFadeUp .5s ease forwards;
-}
-.card img{
-  transition:transform .4s ease;
-}
-
-.card:hover img{
-  transform:scale(1.05);
-}
-/* ===== ANIMAÇÃO FLUTUANTE (LANDING PAGE) ===== */
-@keyframes float{
-  0%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-12px);
-  }
-  100%{
-    transform:translateY(0);
-  }
-}
-
-/* vidro (container principal) */
-.landing .glass{
-  animation:float 6s ease-in-out infinite;
-}
-
-/* imagem flutuando um pouco diferente */
-.landing img{
-  animation:float 4s ease-in-out infinite;
-}
-/* ===== SETAS DO MODAL ===== */
-.arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:38px;
-  background:rgba(0,0,0,.55);
   color:#fff;
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  user-select:none;
-  z-index:10;
 }
 
-.arrow.left{ left:10px; }
-.arrow.right{ right:10px; }
-
-.arrow:hover{
-  background:rgba(0,0,0,.8);
-}
-/* ===== ANIMAÇÃO SUAVE NA TROCA DE IMAGEM DO MODAL ===== */
-#mainImg{
-  opacity:1;
-  transition:opacity .25s ease;
-}
-/* ===== Thumbnail ativa MODAL ===== */
-.thumbs img.active{
-  border:2px solid #6a0dad;
-  opacity:1;
-  transform:scale(1.05);
+body.dark #noResults{
+  color:#fff;
 }
 
-.thumbs img{
-  transition:.3s;
+/* ================= RESPONSIVO ================= */
+
+/* TABLET */
+@media (max-width:1024px){
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  .grid,
+  #productGrid{
+    grid-template-columns:repeat(3,1fr);
+  }
 }
-@media (max-width: 600px){
+
+/* MOBILE */
+@media (max-width:768px){
 
   section{
     padding:20px;
   }
 
-  h1{
-    font-size:2rem;
-  }
-
-  h2{
-    font-size:1.4rem;
-  }
-
-  h3{
-    font-size:1rem;
-  }
-
-  p{
-    font-size:.95rem;
-  }
-}
-@media (max-width: 600px){
-  .card img{
-    height:200px;
-  }
-}
-@media (max-width: 600px){
-  .grid{
+  .grid,
+  #productGrid{
     grid-template-columns:repeat(2,1fr);
-    gap:15px;
-  }
-}
-@media (max-width: 600px){
-  .landing{
-    padding:20px;
-  }
-
-  .glass{
-    padding:30px 20px;
-  }
-
-  .glass h1{
-    font-size:2.2rem;
-  }
-
-  .glass p{
-    font-size:1rem;
-  }
-}
-@media (max-width: 600px){
-  .carousel img{
-    max-height:260px;
-  }
-
-  .modal-content{
-    padding:15px;
-  }
-}
-/* Botão só no mobile */
-.mobile-filter-btn{
-  display:none;
-  width:100%;
-  padding:12px;
-  font-size:1rem;
-  background:#6b3fc9;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  margin:15px 0;
-  cursor:pointer;
-}
-
-/* Mobile */
-@media (max-width: 768px){
-  .mobile-filter-btn{
-    display:block;
-  }
-
-  .sidebar{
-    display:none;
-    margin-bottom:20px;
-  }
-
-  .sidebar.active{
-    display:block;
-  }
-
-  .layout{
-    grid-template-columns:1fr;
-  }
-}
-.menu-icon{
-  font-size:1.3rem;
-  margin-right:8px;
-}
-#noResults{
-  display:none;
-  grid-column:1 / -1;     /* ocupa todas as colunas */
-  text-align:center;
-  margin:40px auto;
-  padding:20px;
-  font-size:1.1rem;
-  line-height:1.6;
-  width:100%;
-  max-width:500px;
-  color:#000;
-}
-
-/* Dark mode */
-body.dark #noResults{
-  color:#fff;
-}
-
-/* MOBILE */
-@media (max-width: 768px){
-  #noResults{
-    font-size:1rem;      /* ajusta tamanho no celular */
-  }
-}
-/* ================= SIDEBAR ================= */
-
-/* Desktop: sidebar visível */
-.sidebar{
-  display:block;
-}
-
-/* Botão categorias escondido no desktop */
-.mobile-filter-btn{
-  display:none;
-}
-
-/* ================= MOBILE / TABLET ================= */
-@media (max-width: 1024px){
-  
-  /* Mostrar botão de categorias */
-  .mobile-filter-btn{
-    display:block;
-    width:100%;
-    padding:12px;
-    font-size:1rem;
-    background:#6b3fc9;
-    color:#fff;
-    border:none;
-    border-radius:10px;
-    margin:15px 0;
-    cursor:pointer;
-  }
-
-  /* Sidebar escondida por padrão */
-  .sidebar{
-    display:none;
-    margin-bottom:20px;
-  }
-
-  /* Sidebar ativa ao clicar no botão */
-  .sidebar.active{
-    display:block;
-  }
-
-  /* Layout de produtos ocupa toda largura */
-  .layout{
-    grid-template-columns:1fr;
-  }
-
-  /* Grid de produtos responsiva */
-  .grid{
-    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
-    gap:15px;
-  }
-
-  /* Aviso noResults */
-  #noResults{
-    font-size:1rem;
-    text-align:center;
-    margin:20px auto;
-  }
-}
-
-/* Mobile ainda menor */
-@media (max-width: 768px){
-  #noResults{
-    font-size:.95rem;
-  }
-}
-.subcats{
-  display:none;
-  margin-left:15px;
-  margin-top:5px;
-}
-
-.subcats button{
-  font-size:.9rem;
-  padding:6px 10px;
-  opacity:.85;
-}
-@media (max-width: 768px){
-  .grid{
-    grid-template-columns: repeat(2, 1fr);
-    gap:15px;
-  }
-}
-@media (max-width: 768px){
-  .card img{
-    height:180px;
-  }
-}
-  /* ===== MOBILE FIRST (CELULAR) ===== */
-@media (max-width: 768px){
-
-  /* GRID: 2 por linha SEMPRE */
-  .grid{
-    grid-template-columns: repeat(2, 1fr);
     gap:14px;
   }
 
-  /* Cards mais confortáveis ao toque */
-  .card{
-    border-radius:14px;
-  }
-
-  /* Imagem menor para caber melhor */
   .card img{
     height:170px;
   }
 
-  /* Desativa hover no mobile */
+  /* remove hover no mobile */
   .card:hover{
     transform:none;
-    box-shadow:0 10px 25px rgba(0,0,0,.1);
   }
 
   .card img.hover{
@@ -626,7 +194,6 @@ body.dark #noResults{
     display:block;
   }
 
-  /* Texto mais compacto */
   .info h3{
     font-size:.95rem;
   }
@@ -634,43 +201,11 @@ body.dark #noResults{
   .price{
     font-size:.9rem;
   }
-}
-  /* ===== TABLET ===== */
-@media (min-width: 769px) and (max-width: 1024px){
 
-  .grid{
-    grid-template-columns: repeat(3, 1fr);
-    gap:18px;
+  #noResults{
+    font-size:1rem;
+    margin:30px auto;
   }
-
-  .card img{
-    height:220px;
-  }
-}
-  /* ================= GRID FIREBASE (ADMIN) ================= */
-
-#productGrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-  gap:20px;
-  width:100%;
-}
-
-/* Tablet */
-@media (max-width: 1024px){
-  #productGrid{
-    grid-template-columns:repeat(3, 1fr);
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px){
-  #productGrid{
-    grid-template-columns:repeat(2, 1fr);
-  }
-}
-.grid{
-  display:grid;
 }
 </style>
 </head>
