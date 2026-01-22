@@ -4,12 +4,38 @@
 <meta charset="UTF-8">
 <title>Admin - Produtos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body{font-family:Arial;padding:20px;background:#f4f4f4}
-input,button{padding:10px;margin:5px 0;width:100%}
-.card{background:#fff;padding:10px;margin:10px 0;border-radius:8px}
-button{cursor:pointer}
-.delete{background:#c0392b;color:#fff;border:none}
+body{
+  font-family:Arial;
+  padding:20px;
+  background:#f4f4f4;
+  max-width:600px;
+  margin:auto;
+}
+
+input, button{
+  padding:10px;
+  margin:6px 0;
+  width:100%;
+}
+
+button{
+  cursor:pointer;
+}
+
+.card{
+  background:#fff;
+  padding:10px;
+  margin:10px 0;
+  border-radius:8px;
+}
+
+.delete{
+  background:#c0392b;
+  color:#fff;
+  border:none;
+}
 </style>
 </head>
 
@@ -17,21 +43,37 @@ button{cursor:pointer}
 
 <h2>📦 Admin de Produtos</h2>
 
-<input id="name" placeholder="Nome do produto">
-<input id="price" placeholder="Preço">
-<input id="link" placeholder="Link">
-<button onclick="addProduct()">Adicionar Produto</button>
+<!-- 🔐 LOGIN -->
+<form id="loginForm">
+  <input id="adminEmail" type="email" placeholder="Email do admin" required>
+  <input id="adminPassword" type="password" placeholder="Senha" required>
+  <button type="submit">Entrar</button>
+</form>
 
-<h3>Produtos cadastrados</h3>
-<div id="list"></div>
+<!-- 🔓 ÁREA ADMIN (só aparece após login) -->
+<div id="adminArea" style="display:none">
 
-<script src="script.js"></script>
-  <!-- Firebase SDKs -->
+  <h3>Novo produto</h3>
+  <input id="name" placeholder="Nome do produto">
+  <input id="price" placeholder="Preço">
+  <input id="link" placeholder="Link">
+  <button onclick="addProduct()">Adicionar Produto</button>
+
+  <h3>Produtos cadastrados</h3>
+  <div id="list"></div>
+
+  <button onclick="logoutAdmin()">Sair</button>
+
+</div>
+
+<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <!-- Admin JS -->
 <script src="admin.js"></script>
+
 </body>
 </html>
+
