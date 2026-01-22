@@ -102,7 +102,7 @@ window.deleteProduct = function (id) {
 
 // 🚪 LOGOUT
 window.logoutAdmin = function () {
-  auth.signOut();
+  firebase.auth().signOut();
 };
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
