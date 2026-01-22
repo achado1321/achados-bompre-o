@@ -230,34 +230,35 @@ document.addEventListener('keydown', e=>{
 
 /* ================= CLICK NOS CARDS (GLOBAL) ================= */
 
-document.querySelectorAll('.card').forEach(card => {
+// ✅ MODAL FUNCIONA PARA TODOS OS PRODUTOS (HTML + ADMIN)
+document.addEventListener('click', function (e) {
+  const card = e.target.closest('.card');
+  if (!card) return;
 
-  if(card.hasAttribute('onclick')) return;
+  const name  = card.dataset.name  || '';
+  const desc  = card.dataset.desc  || '';
+  const price = card.dataset.price || '';
+  const link  = card.dataset.link  || '#';
+  const store = card.dataset.store || 'shopee';
 
-  card.addEventListener('click', () => {
+  let images = [];
 
-    let images = [];
-
-    if(card.dataset.images){
-      try{
-        images = JSON.parse(card.dataset.images);
-      }catch{}
+  // imagens vindas do admin (Firebase)
+  if (card.dataset.images) {
+    try {
+      images = JSON.parse(card.dataset.images);
+    } catch (err) {
+      images = [];
     }
+  }
 
-    if(!images.length){
-      const main = card.querySelector('img.main');
-      if(main) images = [main.src];
-    }
+  // fallback se não tiver images
+  if (!images.length) {
+    const mainImg = card.querySelector('img.main');
+    if (mainImg) images = [mainImg.src];
+  }
 
-    openModal(
-      card.dataset.name || '',
-      card.dataset.desc || '',
-      card.dataset.price || '',
-      card.dataset.link || '#',
-      images,
-      card.dataset.store || 'shopee'
-    );
-  });
+  openModal(name, desc, price, link, images, store);
 });
 
 /* ================= MOBILE CATEGORIAS ================= */
