@@ -40,11 +40,12 @@ if (loginForm) {
 // 🔒 PROTEÇÃO AUTOMÁTICA
 auth.onAuthStateChanged(user => {
   if (user) {
-    if (loginForm) loginForm.style.display = "none";
-    if (adminArea) adminArea.style.display = "block";
+    loginForm.style.display = "none";
+    adminArea.style.display = "block";
+    loadProducts(); // 👈 CHAMA A LISTAGEM
   } else {
-    if (loginForm) loginForm.style.display = "block";
-    if (adminArea) adminArea.style.display = "none";
+    loginForm.style.display = "block";
+    adminArea.style.display = "none";
   }
 });
 // 📦 REFERÊNCIA DA COLEÇÃO
@@ -73,4 +74,38 @@ function addProduct() {
     loadProducts();
   });
 }
+// 📋 LISTAR PRODUTOS
+function loadProducts() {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  produtosRef.orderBy("createdAt", "desc").onSnapshot(snapshot => {
+    list.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const div = document.createElement("div");
+      div.className = "card";
+
+      div.innerHTML = `
+        <strong>${p.name}</strong><br>
+        ${p.price}<br>
+        <a href="${p.link}" target="_blank">Link</a><br><br>
+        <button class="delete" onclick="deleteProduct('${doc.id}')">
+          Excluir
+        </button>
+      `;
+
+      list.appendChild(div);
+    });
+  });
+}
+// 🗑️ EXCLUIR PRODUTO
+function deleteProduct(id) {
+  if (confirm("Excluir este produto?")) {
+    produtosRef.doc(id).delete();
+  }
+}
+
 
