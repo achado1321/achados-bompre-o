@@ -590,6 +590,37 @@ body.dark #noResults{
     height:180px;
   }
 }
+
+  /* ===== FIX RESPONSIVO PARA PRODUTOS DO ADMIN ===== */
+
+/* MOBILE / TABLET */
+@media (max-width: 768px){
+
+  .card{
+    transform:none !important;
+  }
+
+  /* evita trocar imagem no toque */
+  .card img.hover{
+    display:none !important;
+  }
+
+  .card img.main{
+    display:block !important;
+  }
+
+  .card img{
+    height:180px;
+    object-fit:cover;
+  }
+}
+
+/* TABLET */
+@media (max-width: 1024px){
+  .grid{
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  }
+}
 </style>
 </head>
 
