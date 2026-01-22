@@ -274,10 +274,7 @@ document.querySelectorAll('.card').forEach(card => {
     );
   });
 });
-// 🔒 ADMIN OCULTO
-if (location.hash === '#admin') {
-  document.getElementById('adminPanel').style.display = 'block';
-}
+
 function addProductAdmin(){
   const product = {
     name: admName.value,
