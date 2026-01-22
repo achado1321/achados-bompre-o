@@ -324,3 +324,46 @@ function renderAdminProducts(){
 }
 
 renderAdminProducts();
+// ===== PRODUTOS ADMIN =====
+let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+
+function addProduct(){
+  const name = document.getElementById('name').value;
+  const price = document.getElementById('price').value;
+  const link = document.getElementById('link').value;
+
+  if(!name || !price || !link){
+    alert('Preencha tudo');
+    return;
+  }
+
+  produtos.push({ name, price, link });
+  localStorage.setItem('produtos', JSON.stringify(produtos));
+  renderAdmin();
+}
+
+function deleteProduct(index){
+  if(!confirm('Excluir produto?')) return;
+  produtos.splice(index,1);
+  localStorage.setItem('produtos', JSON.stringify(produtos));
+  renderAdmin();
+}
+
+function renderAdmin(){
+  const list = document.getElementById('list');
+  if(!list) return;
+
+  list.innerHTML = '';
+  produtos.forEach((p,i)=>{
+    list.innerHTML += `
+      <div class="card">
+        <strong>${p.name}</strong><br>
+        ${p.price}<br>
+        <button class="delete" onclick="deleteProduct(${i})">Excluir</button>
+      </div>
+    `;
+  });
+}
+
+renderAdmin();
+
