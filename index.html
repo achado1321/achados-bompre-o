@@ -684,7 +684,13 @@ body.dark #noResults{
     display:block;
   }
 }
-
+/* CORREÇÃO SEGURA DO GRID */
+.grid,
+#productGrid{
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 15px;
+}
 </style>
 </head>
 
