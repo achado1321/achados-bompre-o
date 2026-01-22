@@ -15,7 +15,10 @@ function filterCategory(cat){
   let found = false;
 
   cards.forEach(card => {
-    if (cat === 'all' || card.dataset.category === cat) {
+    if (
+  cat === 'all' ||
+  (card.dataset.category === cat && !currentSubcategory)
+) {
       card.style.display = 'block';
       found = true;
     } else {
@@ -266,3 +269,33 @@ document.addEventListener('click', function (e) {
 function toggleCategories(){
   document.querySelector('.sidebar')?.classList.toggle('active');
 }
+function renderFirebaseProduct(produto){
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  // datasets (modal, filtro, busca)
+  card.dataset.name = produto.name || '';
+  card.dataset.desc = produto.desc || '';
+  card.dataset.price = produto.price || '';
+  card.dataset.link = produto.link || '#';
+  card.dataset.store = produto.store || 'shopee';
+  card.dataset.category = produto.category || '';
+  card.dataset.subcategory = produto.subcategory || '';
+  card.dataset.images = JSON.stringify(produto.images || []);
+
+  // HTML interno (IGUAL aos cards antigos)
+  card.innerHTML = `
+    <img class="main" src="${produto.images?.[0] || ''}">
+    <img class="hover" src="${produto.images?.[1] || produto.images?.[0] || ''}">
+    <div class="info">
+      <h3>${produto.name}</h3>
+      <div class="price">${produto.price}</div>
+    </div>
+  `;
+
+  grid.appendChild(card);
+}
+
