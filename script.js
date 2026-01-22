@@ -2,38 +2,20 @@ function filterCategory(cat){
   currentCategory = cat;
   currentSubcategory = '';
 
- document.addEventListener('click', function (e) {
-  const card = e.target.closest('.card');
-  if (!card) return;
+  const cards = document.querySelectorAll('.card');
+  const title = document.getElementById('categoryTitle');
+  let found = false;
 
-  // ⛔ Se o card já usa onclick antigo, NÃO interfere
-  if (card.hasAttribute('onclick')) return;
-
-  const name  = card.dataset.name  || '';
-  const desc  = card.dataset.desc  || '';
-  const price = card.dataset.price || '';
-  const link  = card.dataset.link  || '#';
-  const store = card.dataset.store || 'shopee';
-
-  let images = [];
-
-  if (card.dataset.images) {
-    try {
-      images = JSON.parse(card.dataset.images);
-    } catch {
-      images = [];
+  cards.forEach(card => {
+    if (cat === 'all' || card.dataset.category === cat) {
+      card.style.display = 'block';
+      found = true;
+    } else {
+      card.style.display = 'none';
     }
-  }
+  });
 
-  if (!images.length) {
-    const mainImg = card.querySelector('img.main');
-    if (mainImg) images.push(mainImg.src);
-  }
-
-  openModal(name, desc, price, link, images, store);
-});
-
-  // título da categoria
+  // 🏷️ título da categoria
   if(cat === 'all'){
     title.innerText = '🔥 Achados em Destaque';
   } else if(cat === 'volta-aulas'){
@@ -44,11 +26,11 @@ function filterCategory(cat){
     title.innerText = '🧼 Beleza e Cuidados Pessoais';
   } else if(cat === 'casa'){
     title.innerText = '🏠 Casa e Utilidades Domésticas';
-  }else if(cat === 'moda'){
+  } else if(cat === 'moda'){
     title.innerText = '👕 Moda / Vestuário';
-  }else if(cat === 'tecno'){
+  } else if(cat === 'tecno'){
     title.innerText = '💻 Eletrônicos / Tecnologia';
-    }
+  }
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';
 }
@@ -253,17 +235,36 @@ function toggleSubcats(cat){
 }
 document.querySelectorAll('.card').forEach(card => {
 
-  // ⛔ se já tem onclick antigo, não interfere
+  // se já usa onclick antigo, não interfere
   if (card.hasAttribute('onclick')) return;
 
   card.addEventListener('click', () => {
 
-    const images = card.dataset.images
-      ? JSON.parse(card.dataset.images)
-      : [card.querySelector('img.main')?.src];
+    let images = [];
 
-    const store = card.dataset.store || 'shopee';
+    if (card.dataset.images) {
+      try {
+        images = JSON.parse(card.dataset.images);
+      } catch {
+        images = [];
+      }
+    }
 
+    if (!images.length) {
+      const mainImg = card.querySelector('img.main');
+      if (mainImg) images = [mainImg.src];
+    }
+
+    openModal(
+      card.dataset.name  || '',
+      card.dataset.desc  || '',
+      card.dataset.price || '',
+      card.dataset.link  || '#',
+      images,
+      card.dataset.store || 'shopee'
+    );
+  });
+});
     openModal(
       card.dataset.name || '',
       card.dataset.desc || '',
