@@ -7,17 +7,19 @@ const firebaseConfig = {
   messagingSenderId: "885306134293",
   appId: "1:885306134293:web:a167546fe9c8a7662e231c"
 };
+
 // Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const produtosRef = db.collection("produtos");
 
-// 🔐 LOGIN
+// 🔐 ELEMENTOS
 const loginForm = document.getElementById("loginForm");
 const adminArea = document.getElementById("adminArea");
 
-// 🔒 LOGIN FORM
+// 🔒 LOGIN
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -28,7 +30,7 @@ loginForm.addEventListener("submit", (e) => {
     .catch(() => alert("Login inválido"));
 });
 
-// 🔓 AUTH STATE
+// 🔓 ESTADO DE LOGIN
 auth.onAuthStateChanged(user => {
   if (user) {
     loginForm.style.display = "none";
@@ -39,9 +41,6 @@ auth.onAuthStateChanged(user => {
     adminArea.style.display = "none";
   }
 });
-
-// 🔌 COLEÇÃO
-const produtosRef = db.collection("produtos");
 
 // ➕ ADICIONAR PRODUTO
 window.addProduct = function () {
@@ -93,7 +92,7 @@ function loadProducts() {
     });
 }
 
-// 🗑️ EXCLUIR
+// 🗑️ EXCLUIR PRODUTO
 window.deleteProduct = function (id) {
   if (confirm("Excluir produto?")) {
     produtosRef.doc(id).delete();
@@ -102,13 +101,5 @@ window.deleteProduct = function (id) {
 
 // 🚪 LOGOUT
 window.logoutAdmin = function () {
-  firebase.auth().signOut();
+  auth.signOut();
 };
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
-<script src="admin.js"></script>
-
-
-
