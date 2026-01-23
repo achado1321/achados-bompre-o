@@ -11,6 +11,7 @@ const firebaseConfig = {
   messagingSenderId: "885306134293",
   appId: "1:885306134293:web:a167546fe9c8a7662e231c"
 };
+let editingProductId = null;
 
 firebase.initializeApp(firebaseConfig);
 
@@ -44,6 +45,28 @@ auth.onAuthStateChanged(user => {
     adminArea.style.display = "none";
   }
 });
+window.editProduct = function (id) {
+  produtosRef.doc(id).get().then(doc => {
+    if (!doc.exists) return;
+
+    const p = doc.data();
+    editingProductId = id;
+
+    document.getElementById("name").value = p.name || "";
+    document.getElementById("desc").value = p.desc || "";
+    document.getElementById("price").value = p.price || "";
+    document.getElementById("store").value = p.store || "";
+    document.getElementById("category").value = p.category || "";
+    document.getElementById("subcategory").value = p.subcategory || "";
+    document.getElementById("mainImg").value = p.images?.main || "";
+    document.getElementById("hoverImg").value = p.images?.hover || "";
+    document.getElementById("modalImgs").value =
+      (p.images?.modal || []).join("\n");
+    document.getElementById("link").value = p.link || "";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+};
 
 // ➕ ADICIONAR PRODUTO
 window.addProduct = function () {
@@ -67,26 +90,41 @@ window.addProduct = function () {
     ? modalImgsRaw.split("\n").map(i => i.trim()).filter(Boolean)
     : [];
 
+  const productData = {
+  name,
+  desc,
+  price,
+  store,
+  category,
+  subcategory,
+  images: {
+    main: mainImg,
+    hover: hoverImg,
+    modal: modalImages
+  },
+  link
+};
+
+if (editingProductId) {
+  // ✏️ EDITAR PRODUTO
+  produtosRef.doc(editingProductId).update(productData);
+  editingProductId = null;
+  alert("Produto atualizado com sucesso!");
+} else {
+  // ➕ ADICIONAR PRODUTO
   produtosRef.add({
-    name,
-    desc,
-    price,
-    store,
-    category,
-    subcategory,
-    images: {
-      main: mainImg,
-      hover: hoverImg,
-      modal: modalImages
-    },
-    link,
+    ...productData,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
-
+  alert("Produto adicionado com sucesso!");
+}
+  
   // limpa formulário
   document.querySelectorAll("#adminArea input, #adminArea textarea")
     .forEach(el => el.value = "");
 };
+
+editingProductId = null;
 
 // 📋 LISTAR PRODUTOS
 function loadProducts() {
@@ -102,12 +140,14 @@ function loadProducts() {
       const div = document.createElement("div");
       div.className = "card";
 
-      div.innerHTML = `
-        <strong>${p.name}</strong><br>
-        ${p.price}<br>
-        <a href="${p.link}" target="_blank">Link</a><br><br>
-        <button class="delete" onclick="deleteProduct('${doc.id}')">Excluir</button>
-      `;
+    div.innerHTML = `
+  <strong>${p.name}</strong><br>
+  ${p.price}<br>
+  <a href="${p.link}" target="_blank">Link</a><br><br>
+
+  <button onclick="editProduct('${doc.id}')">Editar</button>
+  <button class="delete" onclick="deleteProduct('${doc.id}')">Excluir</button>
+`;
 
       list.appendChild(div);
     });
