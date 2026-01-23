@@ -31,8 +31,6 @@ function filterCategory(cat){
     title.innerText = '🔥 Achados em Destaque';
   } else if(cat === 'volta-aulas'){
     title.innerText = '🎒 Volta às Aulas';
-  } else if(cat === 'cozinha'){
-    title.innerText = '🥘 Cozinha';
   } else if(cat === 'beleza'){
     title.innerText = '🧼 Beleza e Cuidados Pessoais';
   } else if(cat === 'casa'){
