@@ -700,6 +700,17 @@ body.dark #noResults{
 .products-wrapper{
   overflow:hidden;
 }
+  /* ===== FIX DEFINITIVO DO GRID FIREBASE ===== */
+#productGrid{
+  width:100%;
+  max-width:100%;
+  min-width:0; /* ESSENCIAL para grid dentro de grid */
+}
+
+/* garante que a coluna 1fr realmente encolha */
+.layout > section{
+  min-width:0;
+}
 </style>
 </head>
 
