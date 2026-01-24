@@ -299,29 +299,4 @@ function renderFirebaseProduct(produto){
   grid.appendChild(card);
 }
 
-function startMobileHoverLoopSafe(){
-  const isMobile = window.matchMedia("(hover: none)").matches;
-  if(!isMobile) return;
-
-  // roda só 1 vez
-  if(window.__safeHoverStarted) return;
-  window.__safeHoverStarted = true;
-
-  setInterval(() => {
-    const cards = document.querySelectorAll("#productGrid .card");
-    if(!cards.length) return;
-
-    // alterna somente os 2 primeiros cards visíveis (leve)
-    for(let i=0; i<Math.min(2, cards.length); i++){
-      const card = cards[i];
-      const main = card.querySelector("img.main");
-      const hover = card.querySelector("img.hover");
-
-      if(main && hover && hover.src && hover.src !== main.src){
-        card.classList.toggle("is-flipped");
-      }
-    }
-  }, 5000);
-}
-setTimeout(startMobileHoverLoopSafe, 2000);
 
