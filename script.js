@@ -299,53 +299,28 @@ function renderFirebaseProduct(produto){
   grid.appendChild(card);
 }
 
-function startMobileVisibleHoverLoop(){
+function startMobileHoverLoopSafe(){
   const isMobile = window.matchMedia("(hover: none)").matches;
   if(!isMobile) return;
 
-  // evita múltiplos observers/intervals
-  if(window.__hoverObserver){
-    window.__hoverObserver.disconnect();
-  }
-  if(window.__hoverLoopInterval){
-    clearInterval(window.__hoverLoopInterval);
-  }
+  // roda só 1 vez
+  if(window.__safeHoverStarted) return;
+  window.__safeHoverStarted = true;
 
-  const visibleCards = new Set();
+  setInterval(() => {
+    const cards = document.querySelectorAll("#productGrid .card");
+    if(!cards.length) return;
 
-  // observa apenas o que entra na tela
-  window.__hoverObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const card = entry.target;
+    // alterna somente os 2 primeiros cards visíveis (leve)
+    for(let i=0; i<Math.min(2, cards.length); i++){
+      const card = cards[i];
+      const main = card.querySelector("img.main");
+      const hover = card.querySelector("img.hover");
 
-      if(entry.isIntersecting){
-        visibleCards.add(card);
-      }else{
-        visibleCards.delete(card);
-        card.classList.remove("is-flipped"); // opcional: reseta
+      if(main && hover && hover.src && hover.src !== main.src){
+        card.classList.toggle("is-flipped");
       }
-    });
-  }, {
-    threshold: 0.4 // considera visível quando 40% aparece
-  });
-
-  // observa todos cards atuais
-  document.querySelectorAll(".card").forEach(card => {
-    const main = card.querySelector("img.main");
-    const hover = card.querySelector("img.hover");
-    if(main && hover && hover.src && hover.src !== main.src){
-      window.__hoverObserver.observe(card);
     }
-  });
-
-  // loop leve: só para visíveis
-  window.__hoverLoopInterval = setInterval(() => {
-    const modal = document.getElementById("modal");
-    if(modal && modal.style.display === "flex") return;
-
-    visibleCards.forEach(card => {
-      card.classList.toggle("is-flipped");
-    });
   }, 5000);
 }
 
