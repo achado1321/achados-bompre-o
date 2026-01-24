@@ -299,3 +299,53 @@ function renderFirebaseProduct(produto){
   grid.appendChild(card);
 }
 
+function startMobileVisibleHoverLoop(){
+  const isMobile = window.matchMedia("(hover: none)").matches;
+  if(!isMobile) return;
+
+  // evita múltiplos observers/intervals
+  if(window.__hoverObserver){
+    window.__hoverObserver.disconnect();
+  }
+  if(window.__hoverLoopInterval){
+    clearInterval(window.__hoverLoopInterval);
+  }
+
+  const visibleCards = new Set();
+
+  // observa apenas o que entra na tela
+  window.__hoverObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const card = entry.target;
+
+      if(entry.isIntersecting){
+        visibleCards.add(card);
+      }else{
+        visibleCards.delete(card);
+        card.classList.remove("is-flipped"); // opcional: reseta
+      }
+    });
+  }, {
+    threshold: 0.4 // considera visível quando 40% aparece
+  });
+
+  // observa todos cards atuais
+  document.querySelectorAll(".card").forEach(card => {
+    const main = card.querySelector("img.main");
+    const hover = card.querySelector("img.hover");
+    if(main && hover && hover.src && hover.src !== main.src){
+      window.__hoverObserver.observe(card);
+    }
+  });
+
+  // loop leve: só para visíveis
+  window.__hoverLoopInterval = setInterval(() => {
+    const modal = document.getElementById("modal");
+    if(modal && modal.style.display === "flex") return;
+
+    visibleCards.forEach(card => {
+      card.classList.toggle("is-flipped");
+    });
+  }, 5000);
+}
+
