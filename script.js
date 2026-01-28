@@ -113,7 +113,34 @@ function toggleDarkMode(){
   document.body.classList.toggle('dark');
   document.getElementById('darkBtn').innerText =
     document.body.classList.contains('dark') ? '🌙' : '☀️';
+
+  // ✅ reaplica tema ao trocar modo
+  applyTheme();
 }
+/* ================= THEME FIREBASE (PERSONALIZAÇÃO) ================= */
+
+let themeConfig = null;
+
+// usa o mesmo firestore do produtos.js (Firebase SDK compat)
+const themeDb = firebase.firestore();
+
+themeDb.collection("config").doc("theme").onSnapshot(doc => {
+  themeConfig = doc.data();
+  applyTheme();
+});
+
+function applyTheme(){
+  if(!themeConfig) return;
+
+  const isDark = document.body.classList.contains("dark");
+  const t = isDark ? themeConfig.dark : themeConfig.light;
+  if(!t) return;
+
+  document.documentElement.style.setProperty("--roxo", t.primary || "#6a0dad");
+  document.documentElement.style.setProperty("--laranja", t.accent || "#ff7a00");
+  document.documentElement.style.setProperty("--cinza", t.bg || "#f4f4f4");
+}
+
 
 /* ================= MODAL ================= */
 
