@@ -235,7 +235,14 @@
           <textarea id="modalImgs" placeholder="Imagens Modal (1 por linha)"></textarea>
           <input id="link" placeholder="Link do produto">
 
-          <button class="fx-btn" style="width:100%;" onclick="addProduct()">Salvar Produto</button>
+          <button id="cancelEditBtn"
+  class="fx-btn"
+  style="width:100%; display:none; margin-bottom:12px;"
+  onclick="cancelEdit()">
+  ❌ Cancelar edição
+</button>
+
+          <button class="fx-btn" style="width:100%;" onclick="addProduct()">Salvar Produto</button> 
         </section>
 
         <!-- VIEW: LIST -->
