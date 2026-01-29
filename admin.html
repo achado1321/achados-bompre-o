@@ -281,6 +281,26 @@
       document.querySelectorAll(".fx-nav").forEach(b=>b.classList.remove("active"));
       btn.classList.add("active");
     }
+
+    <hr style="margin:20px 0; opacity:.15">
+
+<h3>🎥 Vídeo do Produto (opcional)</h3>
+
+<input id="video" placeholder="Link do vídeo (mp4) - automático após upload">
+
+<input type="file" id="videoFile" accept="video/mp4,video/webm,video/quicktime">
+<button class="fx-btn" type="button" onclick="uploadVideo()">⬆️ Upload vídeo</button>
+
+<div id="videoProgressBox" style="margin-top:10px; display:none;">
+  <div style="font-size:.9rem; opacity:.85; margin-bottom:6px;">Enviando vídeo...</div>
+  <div style="width:100%; height:12px; background:rgba(255,255,255,.12); border-radius:12px; overflow:hidden;">
+    <div id="videoProgressBar" style="height:100%; width:0%; background:linear-gradient(90deg, #4cc9ff, #b56cff);"></div>
+  </div>
+</div>
+
+<small style="opacity:.75; display:block; margin-top:10px;">
+  ✅ Dica: envie vídeo leve (até 10MB), 720p.
+</small>
   </script>
 
   <script src="admin.js"></script>
