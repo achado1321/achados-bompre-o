@@ -809,6 +809,17 @@ body.dark #noResults{
 <div class="subcats" id="subcats-pet">
   <button onclick="filterSubcategory('alimentação')">Alimentação</button>
 </div>
+
+     <button onclick="toggleSubcats('kids'); filterCategory('kids')">
+   Kids
+</button>
+
+<div class="subcats" id="subcats-kids">
+  <button onclick="filterSubcategory('acessórios infantil')">Acessórios Infantil</button>
+  <button onclick="filterSubcategory('baby')">Baby</button>
+  <button onclick="filterSubcategory('brinquedos')">Brinquedos</button>
+</div>
+  
   
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Buscar produto..." onkeyup="searchProduct()">
