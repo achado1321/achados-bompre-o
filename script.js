@@ -173,7 +173,7 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
   const thumbs = document.getElementById('thumbs');
   thumbs.innerHTML = '';
 
-   // ✅ VIDEO (se existir)
+    // ✅ VIDEO (se existir)
   const videoBox = document.getElementById("videoBox");
   const mainImg = document.getElementById("mainImg");
 
@@ -187,9 +187,8 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
   }
 
   if(video && videoBox){
-    // mostra vídeo e esconde imagem principal
     videoBox.innerHTML = `
-      <video controls autoplay muted playsinline>
+      <video controls autoplay muted playsinline style="width:100%; max-height:70vh; border-radius:16px;">
         <source src="${video}" type="video/mp4">
       </video>
     `;
@@ -200,7 +199,8 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
     }
   }
 
-  if(currentImages.length){
+  // ✅ só renderiza imagens se NÃO tiver vídeo
+  if(currentImages.length && !video){
     changeImageWithFade(currentImages[0]);
 
     currentImages.forEach((img, index)=>{
@@ -217,45 +217,6 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
       thumbs.appendChild(t);
     });
   }
-
-  document.getElementById('modal').style.display = 'flex';
-  enableSwipe();
-}
-
-function closeModal(){
-  document.getElementById('modal').style.display = 'none';
-}
-
-function nextImage(){
-  if(!currentImages.length) return;
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  changeImageWithFade(currentImages[currentIndex]);
-  updateActiveThumb();
-}
-
-function prevImage(){
-  if(!currentImages.length) return;
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  changeImageWithFade(currentImages[currentIndex]);
-  updateActiveThumb();
-}
-
-function changeImageWithFade(src){
-  const img = document.getElementById('mainImg');
-  if(!img) return;
-
-  img.style.opacity = 0;
-  setTimeout(()=>{
-    img.src = src;
-    img.style.opacity = 1;
-  },150);
-}
-
-function updateActiveThumb(){
-  document.querySelectorAll('.thumbs img').forEach((thumb, i)=>{
-    thumb.classList.toggle('active', i === currentIndex);
-  });
-}
 /* ================= SWIPE MOBILE ================= */
 
 function enableSwipe(){
