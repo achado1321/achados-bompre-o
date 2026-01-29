@@ -42,7 +42,7 @@ function filterCategory(cat){
   } else if(cat === 'tecno'){
     title.innerText = '💻 Eletrônicos / Tecnologia';
   } else if(cat === 'kids'){
-    title.innerText = ' 🧸 Kids / Infantil';
+    title.innerText = '🧸 Kids / Infantil';
   }
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';
@@ -115,35 +115,7 @@ function toggleDarkMode(){
   document.body.classList.toggle('dark');
   document.getElementById('darkBtn').innerText =
     document.body.classList.contains('dark') ? '🌙' : '☀️';
-
-  // ✅ reaplica tema ao trocar modo
-  applyTheme();
 }
-/* ================= THEME FIREBASE (PERSONALIZAÇÃO) ================= */
-
-let themeConfig = null;
-
-// usa o mesmo firestore do produtos.js (Firebase SDK compat)
-const themeDb = firebase.firestore();
-
-themeDb.collection("config").doc("theme").onSnapshot(doc => {
-  themeConfig = doc.data();
-  applyTheme();
-});
-
-function applyTheme(){
-  if(!themeConfig) return;
-
-  const isDark = document.body.classList.contains("dark");
-  const t = isDark ? themeConfig.dark : themeConfig.light;
-  if(!t) return;
-
-  document.documentElement.style.setProperty("--roxo", t.primary || "#6a0dad");
-  document.documentElement.style.setProperty("--laranja", t.accent || "#ff7a00");
-  document.documentElement.style.setProperty("--cinza", t.bg || "#f4f4f4");
-}
-
-
 
 /* ================= MODAL ================= */
 
@@ -229,89 +201,8 @@ function updateActiveThumb(){
   document.querySelectorAll('.thumbs img').forEach((thumb, i)=>{
     thumb.classList.toggle('active', i === currentIndex);
   });
-}let currentImages = [];
-let currentIndex = 0;
-let startX = 0;
-let isSwiping = false;
-
-function openModal(title, desc, price, link, images, store = 'shopee'){
-  currentImages = images || [];
-  currentIndex = 0;
-
-  document.getElementById('modalTitle').innerText = title;
-  document.getElementById('modalDesc').innerText = desc;
-  document.getElementById('modalPrice').innerText = price;
-
-  const buyBtn = document.getElementById('modalLink');
-  buyBtn.href = link;
-
-  if(store === 'shein'){
-    buyBtn.innerText = 'Comprar na SHEIN 🖤';
-    buyBtn.style.background = '#000';
-  } else {
-    buyBtn.innerText = 'Comprar na Shopee 🧡';
-    buyBtn.style.background = 'var(--laranja)';
-  }
-
-  const thumbs = document.getElementById('thumbs');
-  thumbs.innerHTML = '';
-
-  if(currentImages.length){
-    changeImageWithFade(currentImages[0]);
-
-    currentImages.forEach((img, index)=>{
-      const t = document.createElement('img');
-      t.src = img;
-      if(index === 0) t.classList.add('active');
-
-      t.onclick = ()=>{
-        currentIndex = index;
-        changeImageWithFade(img);
-        updateActiveThumb();
-      };
-
-      thumbs.appendChild(t);
-    });
-  }
-
-  document.getElementById('modal').style.display = 'flex';
-  enableSwipe();
 }
 
-function closeModal(){
-  document.getElementById('modal').style.display = 'none';
-}
-
-function nextImage(){
-  if(!currentImages.length) return;
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  changeImageWithFade(currentImages[currentIndex]);
-  updateActiveThumb();
-}
-
-function prevImage(){
-  if(!currentImages.length) return;
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  changeImageWithFade(currentImages[currentIndex]);
-  updateActiveThumb();
-}
-
-function changeImageWithFade(src){
-  const img = document.getElementById('mainImg');
-  if(!img) return;
-
-  img.style.opacity = 0;
-  setTimeout(()=>{
-    img.src = src;
-    img.style.opacity = 1;
-  },150);
-}
-
-function updateActiveThumb(){
-  document.querySelectorAll('.thumbs img').forEach((thumb, i)=>{
-    thumb.classList.toggle('active', i === currentIndex);
-  });
-}
 /* ================= SWIPE MOBILE ================= */
 
 function enableSwipe(){
@@ -334,22 +225,14 @@ function enableSwipe(){
 
 /* ================= FECHAR MODAL ================= */
 
-// ✅ FECHAR MODAL (clique fora + ESC)
-document.addEventListener("click", function(e){
-  const modal = document.getElementById("modal");
-  if(!modal) return;
-
-  // se clicou no fundo escuro (fora da modal-content)
-  if(e.target === modal){
-    closeModal();
-  }
+document.getElementById('modal')?.addEventListener('click', e=>{
+  if(e.target.id === 'modal') closeModal();
 });
 
-document.addEventListener("keydown", function(e){
-  if(e.key === "Escape"){
-    closeModal();
-  }
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape') closeModal();
 });
+
 /* ================= CLICK NOS CARDS (GLOBAL) ================= */
 
 // ✅ MODAL FUNCIONA PARA TODOS OS PRODUTOS (HTML + ADMIN)
@@ -362,8 +245,6 @@ document.addEventListener('click', function (e) {
   const price = card.dataset.price || '';
   const link  = card.dataset.link  || '#';
   const store = card.dataset.store || 'shopee';
-  const video = card.dataset.video || '';
-
 
   let images = [];
 
@@ -382,7 +263,7 @@ document.addEventListener('click', function (e) {
     if (mainImg) images = [mainImg.src];
   }
 
-  openModal(name, desc, price, link, images, store, video);
+  openModal(name, desc, price, link, images, store);
 });
 
 /* ================= MOBILE CATEGORIAS ================= */
