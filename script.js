@@ -41,6 +41,8 @@ function filterCategory(cat){
     title.innerText = '👕 Moda / Vestuário';
   } else if(cat === 'tecno'){
     title.innerText = '💻 Eletrônicos / Tecnologia';
+  } else if(cat === 'kids'){
+    title.innerText = ' 🧸 Kids / Infantil';
   }
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';
@@ -171,6 +173,33 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
   const thumbs = document.getElementById('thumbs');
   thumbs.innerHTML = '';
 
+   // ✅ VIDEO (se existir)
+  const videoBox = document.getElementById("videoBox");
+  const mainImg = document.getElementById("mainImg");
+
+  if(videoBox){
+    videoBox.innerHTML = "";
+    videoBox.style.display = "none";
+  }
+
+  if(mainImg){
+    mainImg.style.display = "block";
+  }
+
+  if(video && videoBox){
+    // mostra vídeo e esconde imagem principal
+    videoBox.innerHTML = `
+      <video controls autoplay muted playsinline>
+        <source src="${video}" type="video/mp4">
+      </video>
+    `;
+    videoBox.style.display = "block";
+
+    if(mainImg){
+      mainImg.style.display = "none";
+    }
+  }
+
   if(currentImages.length){
     changeImageWithFade(currentImages[0]);
 
@@ -227,33 +256,6 @@ function updateActiveThumb(){
     thumb.classList.toggle('active', i === currentIndex);
   });
 }
-
-  // ✅ VIDEO (se existir)
-  const videoBox = document.getElementById("videoBox");
-  const mainImg = document.getElementById("mainImg");
-
-  if(videoBox){
-    videoBox.innerHTML = "";
-    videoBox.style.display = "none";
-  }
-
-  if(mainImg){
-    mainImg.style.display = "block";
-  }
-
-  if(video && videoBox){
-    // mostra vídeo e esconde imagem principal
-    videoBox.innerHTML = `
-      <video controls autoplay muted playsinline>
-        <source src="${video}" type="video/mp4">
-      </video>
-    `;
-    videoBox.style.display = "block";
-
-    if(mainImg){
-      mainImg.style.display = "none";
-    }
-  }
 /* ================= SWIPE MOBILE ================= */
 
 function enableSwipe(){
@@ -316,7 +318,7 @@ document.addEventListener('click', function (e) {
     if (mainImg) images = [mainImg.src];
   }
 
-  openModal(name, desc, price, link, images, store);
+  openModal(name, desc, price, link, images, store, video);
 });
 
 /* ================= MOBILE CATEGORIAS ================= */
