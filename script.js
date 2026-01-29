@@ -146,23 +146,20 @@ function applyTheme(){
 
 /* ================= MODAL ================= */
 
-let currentImages = [];
-let currentIndex = 0;
-let startX = 0;
-let isSwiping = false;
-
-function openModal(title, desc, price, link, images, store = 'shopee', video = ''){
+function openModal(title, desc, price, link, images, store = 'shopee', video = '') {
   currentImages = images || [];
   currentIndex = 0;
 
+  // textos
   document.getElementById('modalTitle').innerText = title;
   document.getElementById('modalDesc').innerText = desc;
   document.getElementById('modalPrice').innerText = price;
 
+  // botão comprar
   const buyBtn = document.getElementById('modalLink');
   buyBtn.href = link;
 
-  if(store === 'shein'){
+  if (store === 'shein') {
     buyBtn.innerText = 'Comprar na SHEIN 🖤';
     buyBtn.style.background = '#000';
   } else {
@@ -170,45 +167,59 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
     buyBtn.style.background = 'var(--laranja)';
   }
 
-  const thumbs = document.getElementById('thumbs');
-  thumbs.innerHTML = '';
-
-   // ✅ VIDEO (se existir)
+  // ✅ RESET VIDEO/IMG
   const videoBox = document.getElementById("videoBox");
   const mainImg = document.getElementById("mainImg");
 
-  if(videoBox){
+  if (videoBox) {
     videoBox.innerHTML = "";
     videoBox.style.display = "none";
   }
-
-  if(mainImg){
+  if (mainImg) {
     mainImg.style.display = "block";
   }
 
-  if(video && videoBox){
-    // mostra vídeo e esconde imagem principal
+  // ✅ se tiver vídeo, mostra vídeo
+  if (video && videoBox) {
+    // ⚠️ TEM QUE SER URL DIRETA .mp4 (res.cloudinary.com)
     videoBox.innerHTML = `
-      <video controls autoplay muted playsinline>
+      <video controls playsinline style="width:100%; border-radius:16px;">
         <source src="${video}" type="video/mp4">
       </video>
     `;
     videoBox.style.display = "block";
 
-    if(mainImg){
+    if (mainImg) {
       mainImg.style.display = "none";
     }
   }
 
-  if(currentImages.length){
+  // thumbs
+  const thumbs = document.getElementById('thumbs');
+  thumbs.innerHTML = '';
+
+  // ✅ garante que images é só imagem
+  currentImages = currentImages.filter(url => {
+    if (!url) return false;
+    url = url.toLowerCase();
+    return (
+      url.includes(".png") ||
+      url.includes(".jpg") ||
+      url.includes(".jpeg") ||
+      url.includes(".webp")
+    );
+  });
+
+  if (currentImages.length) {
     changeImageWithFade(currentImages[0]);
 
-    currentImages.forEach((img, index)=>{
+    currentImages.forEach((img, index) => {
       const t = document.createElement('img');
       t.src = img;
+
       if(index === 0) t.classList.add('active');
 
-      t.onclick = ()=>{
+      t.onclick = () => {
         currentIndex = index;
         changeImageWithFade(img);
         updateActiveThumb();
@@ -220,41 +231,6 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
 
   document.getElementById('modal').style.display = 'flex';
   enableSwipe();
-}
-
-function closeModal(){
-  document.getElementById('modal').style.display = 'none';
-}
-
-function nextImage(){
-  if(!currentImages.length) return;
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  changeImageWithFade(currentImages[currentIndex]);
-  updateActiveThumb();
-}
-
-function prevImage(){
-  if(!currentImages.length) return;
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  changeImageWithFade(currentImages[currentIndex]);
-  updateActiveThumb();
-}
-
-function changeImageWithFade(src){
-  const img = document.getElementById('mainImg');
-  if(!img) return;
-
-  img.style.opacity = 0;
-  setTimeout(()=>{
-    img.src = src;
-    img.style.opacity = 1;
-  },150);
-}
-
-function updateActiveThumb(){
-  document.querySelectorAll('.thumbs img').forEach((thumb, i)=>{
-    thumb.classList.toggle('active', i === currentIndex);
-  });
 }
 /* ================= SWIPE MOBILE ================= */
 
