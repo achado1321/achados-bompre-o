@@ -711,6 +711,15 @@ body.dark #noResults{
 .layout > section{
   min-width:0;
 }
+  #videoBox{
+  width:100%;
+  margin-bottom:12px;
+}
+#videoBox video{
+  width:100%;
+  max-height:70vh;
+  border-radius:16px;
+}
 </style>
 </head>
 
@@ -846,6 +855,7 @@ body.dark #noResults{
     <span class="close" onclick="closeModal()">×</span>
 <span class="arrow left" onclick="prevImage()">‹</span>
   <span class="arrow right" onclick="nextImage()">›</span>
+    <div id="videoBox" style="display:none;"></div>
     <img id="mainImg">
     <div class="thumbs" id="thumbs"></div>
   </div>
