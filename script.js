@@ -149,7 +149,7 @@ let currentIndex = 0;
 let startX = 0;
 let isSwiping = false;
 
-function openModal(title, desc, price, link, images, store = 'shopee'){
+function openModal(title, desc, price, link, images, store = 'shopee', video = ''){
   currentImages = images || [];
   currentIndex = 0;
 
@@ -228,6 +228,32 @@ function updateActiveThumb(){
   });
 }
 
+  // ✅ VIDEO (se existir)
+  const videoBox = document.getElementById("videoBox");
+  const mainImg = document.getElementById("mainImg");
+
+  if(videoBox){
+    videoBox.innerHTML = "";
+    videoBox.style.display = "none";
+  }
+
+  if(mainImg){
+    mainImg.style.display = "block";
+  }
+
+  if(video && videoBox){
+    // mostra vídeo e esconde imagem principal
+    videoBox.innerHTML = `
+      <video controls autoplay muted playsinline>
+        <source src="${video}" type="video/mp4">
+      </video>
+    `;
+    videoBox.style.display = "block";
+
+    if(mainImg){
+      mainImg.style.display = "none";
+    }
+  }
 /* ================= SWIPE MOBILE ================= */
 
 function enableSwipe(){
@@ -270,6 +296,8 @@ document.addEventListener('click', function (e) {
   const price = card.dataset.price || '';
   const link  = card.dataset.link  || '#';
   const store = card.dataset.store || 'shopee';
+  const video = card.dataset.video || '';
+
 
   let images = [];
 
