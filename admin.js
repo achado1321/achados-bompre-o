@@ -161,7 +161,8 @@ window.addProduct = function () {
     hover: hoverImg,
     modal: modalImages
   },
-  link
+  link,
+  video
 };
 
 if (editingProductId) {
