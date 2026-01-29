@@ -50,11 +50,7 @@ db.collection("produtos")
 
   });
 
-card.dataset.video = p.video || "";
-card.dataset.images = JSON.stringify([
-  p.images?.main,
-  ...(p.images?.modal || [])
-].filter(Boolean));
+
 
 
  
