@@ -268,3 +268,73 @@ window.cancelEdit = function(){
   if (title) title.innerText = "Adicionar produto";
 };
 
+// ===== CONFIG CLOUDINARY =====
+const CLOUDINARY_CLOUD_NAME = "COLOQUE_AQUI";
+const CLOUDINARY_UPLOAD_PRESET = "COLOQUE_AQUI";
+
+// ✅ Upload de vídeo (Cloudinary unsigned)
+window.uploadVideo = function(){
+  const fileInput = document.getElementById("videoFile");
+  const videoInput = document.getElementById("video");
+  const progressBox = document.getElementById("videoProgressBox");
+  const progressBar = document.getElementById("videoProgressBar");
+
+  if(!fileInput || !fileInput.files.length){
+    alert("Selecione um vídeo primeiro.");
+    return;
+  }
+
+  const file = fileInput.files[0];
+
+  // opcional: limite tamanho ~30MB
+  const maxMB = 30;
+  if(file.size > maxMB * 1024 * 1024){
+    alert(`Vídeo muito grande. Envie até ${maxMB}MB.`);
+    return;
+  }
+
+  const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
+
+  const form = new FormData();
+  form.append("file", file);
+  form.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+  // UI progresso
+  if(progressBox) progressBox.style.display = "block";
+  if(progressBar) progressBar.style.width = "0%";
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+
+  xhr.upload.onprogress = function(e){
+    if(e.lengthComputable){
+      const percent = Math.round((e.loaded / e.total) * 100);
+      if(progressBar) progressBar.style.width = percent + "%";
+    }
+  };
+
+  xhr.onload = function(){
+    if(progressBox) progressBox.style.display = "none";
+
+    if(xhr.status >= 200 && xhr.status < 300){
+      const res = JSON.parse(xhr.responseText);
+
+      // ✅ link final do vídeo mp4
+      const secureUrl = res.secure_url;
+
+      videoInput.value = secureUrl;
+      alert("✅ Vídeo enviado com sucesso!");
+    } else {
+      console.error(xhr.responseText);
+      alert("❌ Erro no upload do vídeo.");
+    }
+  };
+
+  xhr.onerror = function(){
+    if(progressBox) progressBox.style.display = "none";
+    alert("❌ Erro de conexão no upload.");
+  };
+
+  xhr.send(form);
+};
+
