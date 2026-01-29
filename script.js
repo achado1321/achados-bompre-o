@@ -147,18 +147,12 @@ function applyTheme(){
 
 /* ================= MODAL ================= */
 
-function changeImageWithFade(src){
-  const img = document.getElementById("mainImg");
-  if(!img) return;
+let currentImages = [];
+let currentIndex = 0;
+let startX = 0;
+let isSwiping = false;
 
-  img.style.opacity = 0;
-
-  setTimeout(()=>{
-    img.src = src;
-    img.style.opacity = 1;
-  }, 150);
-}
-function openModal(title, desc, price, link, images, store = 'shopee', video = ''){
+function openModal(title, desc, price, link, images, store = 'shopee'){
   currentImages = images || [];
   currentIndex = 0;
 
@@ -180,32 +174,7 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
   const thumbs = document.getElementById('thumbs');
   thumbs.innerHTML = '';
 
-  // ✅ VIDEO
-  const videoBox = document.getElementById("videoBox");
-  const mainImg = document.getElementById("mainImg");
-
-  if(videoBox){
-    videoBox.innerHTML = "";
-    videoBox.style.display = "none";
-  }
-
-  if(mainImg){
-    mainImg.style.display = "block";
-  }
-
-  // ✅ Se tiver vídeo: mostra vídeo e NÃO renderiza imagens
-  if(video && videoBox){
-    videoBox.innerHTML = `
-      <video controls autoplay muted playsinline style="width:100%; max-height:70vh; border-radius:16px;">
-        <source src="${video}" type="video/mp4">
-      </video>
-    `;
-    videoBox.style.display = "block";
-    if(mainImg) mainImg.style.display = "none";
-  }
-
-  // ✅ Só renderiza imagens se NÃO tiver vídeo
-  if(currentImages.length && !video){
+  if(currentImages.length){
     changeImageWithFade(currentImages[0]);
 
     currentImages.forEach((img, index)=>{
@@ -227,6 +196,122 @@ function openModal(title, desc, price, link, images, store = 'shopee', video = '
   enableSwipe();
 }
 
+function closeModal(){
+  document.getElementById('modal').style.display = 'none';
+}
+
+function nextImage(){
+  if(!currentImages.length) return;
+  currentIndex = (currentIndex + 1) % currentImages.length;
+  changeImageWithFade(currentImages[currentIndex]);
+  updateActiveThumb();
+}
+
+function prevImage(){
+  if(!currentImages.length) return;
+  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+  changeImageWithFade(currentImages[currentIndex]);
+  updateActiveThumb();
+}
+
+function changeImageWithFade(src){
+  const img = document.getElementById('mainImg');
+  if(!img) return;
+
+  img.style.opacity = 0;
+  setTimeout(()=>{
+    img.src = src;
+    img.style.opacity = 1;
+  },150);
+}
+
+function updateActiveThumb(){
+  document.querySelectorAll('.thumbs img').forEach((thumb, i)=>{
+    thumb.classList.toggle('active', i === currentIndex);
+  });
+}let currentImages = [];
+let currentIndex = 0;
+let startX = 0;
+let isSwiping = false;
+
+function openModal(title, desc, price, link, images, store = 'shopee'){
+  currentImages = images || [];
+  currentIndex = 0;
+
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalDesc').innerText = desc;
+  document.getElementById('modalPrice').innerText = price;
+
+  const buyBtn = document.getElementById('modalLink');
+  buyBtn.href = link;
+
+  if(store === 'shein'){
+    buyBtn.innerText = 'Comprar na SHEIN 🖤';
+    buyBtn.style.background = '#000';
+  } else {
+    buyBtn.innerText = 'Comprar na Shopee 🧡';
+    buyBtn.style.background = 'var(--laranja)';
+  }
+
+  const thumbs = document.getElementById('thumbs');
+  thumbs.innerHTML = '';
+
+  if(currentImages.length){
+    changeImageWithFade(currentImages[0]);
+
+    currentImages.forEach((img, index)=>{
+      const t = document.createElement('img');
+      t.src = img;
+      if(index === 0) t.classList.add('active');
+
+      t.onclick = ()=>{
+        currentIndex = index;
+        changeImageWithFade(img);
+        updateActiveThumb();
+      };
+
+      thumbs.appendChild(t);
+    });
+  }
+
+  document.getElementById('modal').style.display = 'flex';
+  enableSwipe();
+}
+
+function closeModal(){
+  document.getElementById('modal').style.display = 'none';
+}
+
+function nextImage(){
+  if(!currentImages.length) return;
+  currentIndex = (currentIndex + 1) % currentImages.length;
+  changeImageWithFade(currentImages[currentIndex]);
+  updateActiveThumb();
+}
+
+function prevImage(){
+  if(!currentImages.length) return;
+  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+  changeImageWithFade(currentImages[currentIndex]);
+  updateActiveThumb();
+}
+
+function changeImageWithFade(src){
+  const img = document.getElementById('mainImg');
+  if(!img) return;
+
+  img.style.opacity = 0;
+  setTimeout(()=>{
+    img.src = src;
+    img.style.opacity = 1;
+  },150);
+}
+
+function updateActiveThumb(){
+  document.querySelectorAll('.thumbs img').forEach((thumb, i)=>{
+    thumb.classList.toggle('active', i === currentIndex);
+  });
+}
 /* ================= SWIPE MOBILE ================= */
 
 function enableSwipe(){
