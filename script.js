@@ -249,14 +249,22 @@ function enableSwipe(){
 
 /* ================= FECHAR MODAL ================= */
 
-document.getElementById('modal')?.addEventListener('click', e=>{
-  if(e.target.id === 'modal') closeModal();
+// ✅ FECHAR MODAL (clique fora + ESC)
+document.addEventListener("click", function(e){
+  const modal = document.getElementById("modal");
+  if(!modal) return;
+
+  // se clicou no fundo escuro (fora da modal-content)
+  if(e.target === modal){
+    closeModal();
+  }
 });
 
-document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape') closeModal();
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    closeModal();
+  }
 });
-
 /* ================= CLICK NOS CARDS (GLOBAL) ================= */
 
 // ✅ MODAL FUNCIONA PARA TODOS OS PRODUTOS (HTML + ADMIN)
