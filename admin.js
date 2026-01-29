@@ -137,6 +137,7 @@ window.addProduct = function () {
   const mainImg = normalizeImageUrl(document.getElementById("mainImg").value);
   const hoverImg = normalizeImageUrl(document.getElementById("hoverImg").value);
   const modalImgsRaw = document.getElementById("modalImgs").value.trim();
+  const video = document.getElementById("video").value.trim();
   const link = document.getElementById("link").value.trim();
 
   if (!name || !price || !link || !mainImg) {
