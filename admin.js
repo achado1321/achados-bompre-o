@@ -104,6 +104,7 @@ window.editProduct = function (id) {
     document.getElementById("subcategory").value = p.subcategory || "";
     document.getElementById("mainImg").value = p.images?.main || "";
     document.getElementById("hoverImg").value = p.images?.hover || "";
+    document.getElementById("video").value = p.video || "";
     document.getElementById("modalImgs").value =
       (p.images?.modal || []).join("\n");
     document.getElementById("link").value = p.link || "";
