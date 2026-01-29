@@ -26,6 +26,7 @@ db.collection("produtos")
       card.dataset.category = p.category || "";
       card.dataset.subcategory = p.subcategory || "";
       card.dataset.store = p.store || "shopee";
+      card.dataset.video = p.video || "";
       card.dataset.name = p.name;
       card.dataset.desc = p.desc || "";
       card.dataset.price = p.price || "";
