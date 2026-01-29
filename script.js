@@ -147,17 +147,11 @@ function applyTheme(){
 
 /* ================= MODAL ================= */
 
-function changeImageWithFade(src){
-  const img = document.getElementById('mainImg');
-  if(!img) return;
+let currentImages = []; 
+let currentIndex = 0;
+let startX = 0;
+let isSwiping = false;
 
-  img.style.opacity = 0;
-
-  setTimeout(()=>{
-    img.src = src;
-    img.style.opacity = 1;
-  },150);
-}
 function openModal(title, desc, price, link, images, store = 'shopee', video = ''){
   currentImages = images || [];
   currentIndex = 0;
