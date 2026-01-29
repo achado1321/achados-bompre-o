@@ -138,7 +138,8 @@ window.addProduct = function () {
   const mainImg = normalizeImageUrl(document.getElementById("mainImg").value);
   const hoverImg = normalizeImageUrl(document.getElementById("hoverImg").value);
   const modalImgsRaw = document.getElementById("modalImgs").value.trim();
-  const video = document.getElementById("video").value.trim();
+  const videoEl = document.getElementById("video");
+  const video = videoEl ? videoEl.value.trim() : "";
   const link = document.getElementById("link").value.trim();
 
   if (!name || !price || !link || !mainImg) {
@@ -339,5 +340,25 @@ window.uploadVideo = function(){
   };
 
   xhr.send(form);
+};
+
+window.switchView = function(view, btn){
+  // desativa todos
+  document.querySelectorAll(".fx-view").forEach(v => v.style.display = "none");
+  document.querySelectorAll(".fx-nav").forEach(b => b.classList.remove("active"));
+
+  // ativa view selecionada
+  const el = document.getElementById("view" + view.charAt(0).toUpperCase() + view.slice(1));
+  if(el) el.style.display = "block";
+
+  if(btn) btn.classList.add("active");
+
+  // muda título
+  const title = document.getElementById("pageTitle");
+  if(title){
+    title.innerText = (view === "add") ? "Adicionar produto" :
+                      (view === "list") ? "Produtos cadastrados" :
+                      "Painel Admin";
+  }
 };
 
